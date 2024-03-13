@@ -9,7 +9,6 @@ const cors = require("cors");
 // const booksRouter = require("./controllers/books");
 // const librariansRouter = require("./controllers/librarians");
 // const managementRouter = require("./controllers/management");
-const mysql = require("mysql");
 
 const app = express();
 
@@ -17,25 +16,8 @@ const app = express();
 
 logger.info(`Server running on port ${config.PORT}`);
 
-const db = mysql.createConnection({
-    host: config.MYSQL_HOST,
-    user: config.MYSQL_USER,
-    password: config.MYSQL_PASSWORD,
-    database: config.MYSQL_DATABASE
-});
-
-db.connect((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('Connected to MYSQL database');
-});
-
-global.db = db;
-
-
 app.use(cors());
-app.use(express.static("dist"));
+// app.use(express.static("dist"));
 app.use(express.json());
 // app.use(middleware.requestLogger);
 // app.use(middleware.tokenExtractor);
