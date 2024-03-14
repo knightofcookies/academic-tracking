@@ -63,14 +63,15 @@ mysql> desc session;
 +------------+-------------+------+-----+---------+----------------+
 
 mysql> desc student;
-+--------------+--------------+------+-----+---------+-------+
-| Field        | Type         | Null | Key | Default | Extra |
-+--------------+--------------+------+-----+---------+-------+
-| roll         | int          | NO   | PRI | NULL    |       |
-| name         | varchar(100) | NO   |     | NULL    |       |
-| email        | varchar(100) | NO   |     | NULL    |       |
-| programme_id | int          | NO   | MUL | NULL    |       |
-+--------------+--------------+------+-----+---------+-------+
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| roll            | int          | NO   | PRI | NULL    |       |
+| name            | varchar(100) | NO   |     | NULL    |       |
+| email           | varchar(255) | NO   |     | NULL    |       |
+| programme_id    | int          | NO   | MUL | NULL    |       |
+| year_of_joining | year         | NO   |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
 
 
 mysql> desc takes;
