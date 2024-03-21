@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const usersRouter = require("express").Router();
-const User = require("../models/user");
+const dbConn = require("../utils/db");
 
 usersRouter.post("/", async (request, response) => {
   const { username, password } = request.body;
@@ -14,19 +14,26 @@ usersRouter.post("/", async (request, response) => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
-  const user = new User({
-    username,
-    passwordHash,
+  const query = "INSERT INTO user (username, password_hash) VALUES (?, ?);";
+
+  dbConn.query(query, [username, passwordHash], (err, res) => {
+    if (err) {
+      response.status(500).end();
+    }
+    console.log(res);
+    response.status(201).end();
   });
-
-  const savedUser = await user.save();
-
-  response.status(201).json(savedUser);
 });
 
 usersRouter.get("/", async (request, response) => {
-  const users = await User.find({}).populate("books", ['title', 'author']);
-  response.json(users);
+  const query = "SELECT username FROM user;";
+
+  dbConn.query(query, (err, res) => {
+    if (err) {
+      response.status(500).end();
+    }
+    response.json(res);
+  });
 });
 
 module.exports = usersRouter;
