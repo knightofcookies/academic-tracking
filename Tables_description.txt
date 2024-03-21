@@ -98,3 +98,25 @@ mysql> desc teaches;
 
 
 
+mysql> desc administrator;
++----------------------+--------------+------+-----+---------+-------+
+| Field                | Type         | Null | Key | Default | Extra |
++----------------------+--------------+------+-----+---------+-------+
+| username             | varchar(25)  | NO   | PRI | NULL    |       |
+| email                | varchar(255) | NO   |     | NULL    |       |
+| password_hash        | char(60)     | NO   |     | NULL    |       |
+| security_question    | varchar(250) | NO   |     | NULL    |       |
+| security_answer_hash | char(60)     | NO   |     | NULL    |       |
++----------------------+--------------+------+-----+---------+-------+
+
+
+mysql> desc user;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| username      | varchar(25)  | NO   | PRI | NULL    |       |
+| email         | varchar(255) | NO   |     | NULL    |       |
+| password_hash | char(60)     | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+
+
