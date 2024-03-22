@@ -67,3 +67,17 @@ CREATE TABLE teaches (
     FOREIGN KEY (session_id) REFERENCES session(id) ON DELETE CASCADE,
     PRIMARY KEY (instructor_id, course_id, session_id)
 );
+
+CREATE TABLE user (
+	username VARCHAR(25) PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    password_hash CHAR(60) NOT NULL
+);
+
+CREATE TABLE administrator (
+	username VARCHAR(25) PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    password_hash CHAR(60) NOT NULL,
+    security_question VARCHAR(250) NOT NULL,
+    security_answer_hash CHAR(60) NOT NULL
+);
