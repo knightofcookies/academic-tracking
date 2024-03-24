@@ -3,21 +3,21 @@ const config = require("./config");
 const util = require("util");
 
 const connection = mysql.createConnection({
-  host: config.MYSQL_HOST,
-  user: config.MYSQL_USER,
-  password: config.MYSQL_PASSWORD,
-  database: config.MYSQL_DATABASE,
+    host: config.MYSQL_HOST,
+    user: config.MYSQL_USER,
+    password: config.MYSQL_PASSWORD,
+    database: config.MYSQL_DATABASE,
 });
 
 connection.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("Connected to MYSQL database");
+    if (err) {
+        throw err;
+    }
+    console.log("Connected to MYSQL database");
 });
 
 connection.on("error", function (err) {
-  console.error(err.code);
+    console.error(err.code);
 });
 
 connection.query = util.promisify(connection.query).bind(connection);

@@ -6,6 +6,8 @@ const cors = require("cors");
 const middleware = require("./utils/middleware");
 const usersRouter = require("./controllers/users");
 const adminRouter = require("./controllers/admin");
+const loginRouter = require("./controllers/login");
+const programmesRouter = require("./controllers/programmes");
 
 const app = express();
 
@@ -19,6 +21,8 @@ app.use(middleware.tokenExtractor);
 
 app.use("/api/users", middleware.userExtractor, usersRouter);
 app.use("/api/admin", middleware.adminExtractor, adminRouter);
+app.use("/api/login", loginRouter);
+app.use("/api/programmes", middleware.userAdminExtractor, programmesRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

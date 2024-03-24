@@ -2,89 +2,109 @@ const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 const dbConn = require("./db");
 
+// TODO Mixed user and admin middleware for commonly accessible routes
+
 const requestLogger = (request, response, next) => {
-  logger.info("Method:", request.method);
-  logger.info("Path:  ", request.path);
-  logger.info("Body:  ", request.body);
-  logger.info("---");
-  next();
+    logger.info("Method:", request.method);
+    logger.info("Path:  ", request.path);
+    logger.info("Body:  ", request.body);
+    logger.info("---");
+    next();
 };
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
+    response.status(404).send({ error: "unknown endpoint" });
 };
 
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message);
+    logger.error(error.message);
 
-  if (error.name === "ValidationError") {
-    return response.status(400).json({ error: error.message });
-  } else if (error.name === "JsonWebTokenError") {
-    return response.status(401).json({ error: error.message });
-  } else if (error.name === "TokenExpiredError") {
-    return response.status(401).json({ error: "token expired" });
-  }
+    if (error.name === "ValidationError") {
+        return response.status(400).json({ error: error.message });
+    } else if (error.name === "JsonWebTokenError") {
+        return response.status(401).json({ error: error.message });
+    } else if (error.name === "TokenExpiredError") {
+        return response.status(401).json({ error: "token expired" });
+    }
 
-  next(error);
+    next(error);
 };
 
 const tokenExtractor = (request, response, next) => {
-  const authorization = request.get("Authorization");
-  if (authorization && authorization.startsWith("Bearer ")) {
-    request.token = authorization.replace("Bearer ", "");
-  } else {
-    request.token = null;
-  }
+    const authorization = request.get("Authorization");
+    if (authorization && authorization.startsWith("Bearer ")) {
+        request.token = authorization.replace("Bearer ", "");
+    } else {
+        request.token = null;
+    }
 
-  next();
+    next();
 };
 
 const userExtractor = async (request, response, next) => {
-  try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     if (!decodedToken.username) {
-      return response.status(401).json({ error: "Token invalid" });
+        return response.status(401).json({ error: "Token invalid" });
     }
-    const [user] = await dbConn.query("SELECT * FROM user WHERE username=?", [
-      decodedToken.username,
+    const user = await dbConn.query("SELECT * FROM user WHERE username=?", [
+        decodedToken.username,
     ]);
-    if (user) {
-      request.user = user;
+    if (user.length !== 0) {
+        request.user = user[0];
     } else {
-      request.user = null;
+        throw Error("Token invalid");
     }
-  } catch (err) {
-    throw err;
-  }
-  next();
+    next();
 };
 
 const adminExtractor = async (request, response, next) => {
-  try {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     if (!decodedToken.username) {
-      return response.status(401).json({ error: "Token invalid" });
+        return response.status(401).json({ error: "Token invalid" });
     }
-    const [administrator] = await dbConn.query(
-      "SELECT * FROM administrator WHERE username=?",
-      [decodedToken.username]
+    const administrator = await dbConn.query(
+        "SELECT * FROM administrator WHERE username=?",
+        [decodedToken.username]
     );
-    if (administrator) {
-      request.administrator = administrator;
+    if (administrator.length !== 0) {
+        request.administrator = administrator[0];
     } else {
-      request.administrator = null;
+        throw Error("Token invalid");
     }
-  } catch (err) {
-    throw err;
-  }
-  next();
+
+    next();
+}; // TODO Check if admin only routes can be accessed by user and vice versa
+
+const userAdminExtractor = async (request, response, next) => {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    if (!decodedToken.username) {
+        return response.status(401).json({ error: "Token invalid" });
+    }
+    const administrator = await dbConn.query(
+        "SELECT * FROM administrator WHERE username=?",
+        [decodedToken.username]
+    );
+    if (administrator.length !== 0) {
+        request.administrator = administrator[0];
+    } else {
+        const user = await dbConn.query("SELECT * FROM user WHERE username=?", [
+            decodedToken.username,
+        ]);
+        if (user.length !== 0) {
+            request.user = user[0];
+        } else {
+            throw Error("Token invalid");
+        }
+    }
+    next();
 };
 
 module.exports = {
-  requestLogger,
-  unknownEndpoint,
-  errorHandler,
-  tokenExtractor,
-  userExtractor,
-  adminExtractor,
+    requestLogger,
+    unknownEndpoint,
+    errorHandler,
+    tokenExtractor,
+    userExtractor,
+    adminExtractor,
+    userAdminExtractor,
 };
