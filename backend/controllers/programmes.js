@@ -11,7 +11,74 @@ programmesRouter.post("/", async (request, response) => {
         return response.status(403).end();
     }
 
-    let {dept_name, degree, name } = request.body;
+    let { dept_name, degree, name } = request.body;
+
+    if (!degree) {
+        return response.status(400).json({
+            error: "degree missing in request body",
+        });
+    }
+
+    if (!name) {
+        return response.status(400).json({
+            error: "name missing in request body",
+        });
+    }
+
+    if (!dept_name) {
+        return response.status(400).json({
+            error: "dept_name missing in request body",
+        });
+    }
+
+    degree = degree.trim();
+    name = name.trim();
+    dept_name = dept_name.trim();
+
+    if (name.length < 2) {
+        return response.status(400).json({
+            error: "name cannot be less than 2 characters long",
+        });
+    }
+
+    if (degree.length < 2) {
+        return response.status(400).json({
+            error: "degree cannot be less than 2 characters long",
+        });
+    }
+
+    if (dept_name.length < 2) {
+        return response.status(400).json({
+            error: "dept_name cannot be less than 2 characters long",
+        });
+    }
+
+    const department = await dbConn.query(
+        "SELECT * FROM department WHERE name=?",
+        [dept_name]
+    );
+    if (department.length === 0) {
+        return response.status(400).json({
+            error: "Invalid dept_name",
+        });
+    }
+
+    const res = await dbConn.query(
+        "INSERT INTO programme (name, degree, dept_name) VALUES (?, ?, ?)",
+        [name, degree, dept_name]
+    );
+    return response.status(201).json({
+        id: res.insertId,
+    });
+});
+
+programmesRouter.put("/:id", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
+    const { id } = request.params;
+    let { dept_name, degree, name } = request.body;
 
     if (!degree) {
         return response.status(400).json({
@@ -64,10 +131,20 @@ programmesRouter.post("/", async (request, response) => {
     }
 
     await dbConn.query(
-        "INSERT INTO programme (name, degree, dept_name) VALUES (?, ?, ?)",
-        [name, degree, dept_name]
+        "UPDATE programme SET name=?, degree=?, dept_name=? WHERE id=?",
+        [name, degree, dept_name, id]
     );
-    return response.status(201).end();
+    return response.status(200).end();
+});
+
+programmesRouter.delete("/:id", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
+    const { id } = request.params;
+    await dbConn.query("DELETE FROM programme WHERE id=?", [id]);
+    return response.status(204).end();
 });
 
 module.exports = programmesRouter;

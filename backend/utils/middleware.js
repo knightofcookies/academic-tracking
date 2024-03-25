@@ -2,8 +2,6 @@ const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 const dbConn = require("./db");
 
-// TODO Mixed user and admin middleware for commonly accessible routes
-
 const requestLogger = (request, response, next) => {
     logger.info("Method:", request.method);
     logger.info("Path:  ", request.path);

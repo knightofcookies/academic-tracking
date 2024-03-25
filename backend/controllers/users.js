@@ -1,15 +1,15 @@
 const usersRouter = require("express").Router();
 const dbConn = require("../utils/db");
 
-// TODO Add PUT and DELETE requests
+// TODO Display warning on frontend that password cannot be padded with spaces
 
 usersRouter.get("/users", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
     }
     const query = "SELECT username, email FROM user";
-    const qres = await dbConn.query(query);
-    response.json(qres);
+    const users = await dbConn.query(query);
+    response.json(users);
 });
 
 usersRouter.post("/", async (request, response) => {
@@ -17,7 +17,7 @@ usersRouter.post("/", async (request, response) => {
         return response.status(403).end();
     }
 
-    const { username, email, password } = request.body;
+    let { username, email, password } = request.body;
 
     if (!username) {
         return response.status(400).json({
@@ -37,19 +37,23 @@ usersRouter.post("/", async (request, response) => {
         });
     }
 
-    if (username.length < 3) {
+    username = username.trim();
+    password = password.trim();
+    email = email.trim();
+
+    if (!username || username.length < 3) {
         return response.status(400).json({
             error: "username must be at least 3 characters long",
         });
     }
 
-    if (password.length < 3) {
+    if (!password || password.length < 3) {
         return response.status(400).json({
             error: "password must be at least 3 characters long",
         });
     }
 
-    if (!validator.validate(email)) {
+    if (!email || !validator.validate(email)) {
         return response.status(400).json({
             error: "Invalid email",
         });
@@ -94,19 +98,21 @@ usersRouter.post("/changepassword", async (request, response) => {
     }
 
     const user = request.user;
-    const { new_password, current_password } = request.body;
+    let { new_password, current_password } = request.body;
 
     if (!new_password) {
         return response.status(400).json({
-            error: "New password not provided",
+            error: "new_password not provided",
         });
-    } else if (new_password.length < 3) {
+    }
+    new_password = new_password.trim();
+    if (new_password.length < 3) {
         return response.status(400).json({
-            error: "New password should be at least five characters long",
+            error: "new_password should be at least three characters long",
         });
     } else if (!current_password) {
         return response.status(400).json({
-            error: "Current password not provided",
+            error: "current_password not provided",
         });
     }
 
@@ -128,6 +134,107 @@ usersRouter.post("/changepassword", async (request, response) => {
     ]);
 
     return response.status(200).end();
+});
+
+usersRouter.put("/:username", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
+    const { curr_username } = request.params;
+    let { username, email, password } = request.body;
+
+    const userSearch = dbConn.query(
+        "SELECT username, email FROM user WHERE username=?",
+        [curr_username]
+    );
+    if (userSearch.length === 0) {
+        return response.status(400).json({
+            error: "A user with the username given in the request parameters does not exist.",
+        });
+    }
+
+    const user = userSearch[0];
+
+    if (!username) {
+        return response.status(400).json({
+            error: "username missing in request body",
+        });
+    }
+
+    if (!password) {
+        return response.status(400).json({
+            error: "password missing in request body",
+        });
+    }
+
+    if (!email) {
+        return response.status(400).json({
+            error: "email missing in request body",
+        });
+    }
+
+    username = username.trim();
+    password = password.trim();
+    email = email.trim();
+
+    if (!username || username.length < 3) {
+        return response.status(400).json({
+            error: "username must be at least 3 characters long",
+        });
+    }
+
+    if (!password || password.length < 3) {
+        return response.status(400).json({
+            error: "password must be at least 3 characters long",
+        });
+    }
+
+    if (!email || !validator.validate(email)) {
+        return response.status(400).json({
+            error: "Invalid email",
+        });
+    }
+
+    const userWithUsername = await dbConn.query(
+        "SELECT * FROM user WHERE username=?",
+        [username]
+    );
+
+    if (curr_username !== username && userWithUsername.length !== 0) {
+        return response.status(409).json({
+            error: "A user with that username already exists",
+        });
+    }
+
+    const userWithEmail = await dbConn.query(
+        "SELECT * FROM user WHERE email=?",
+        [email]
+    );
+
+    if (user.email !== email && userWithEmail.length !== 0) {
+        return response.status(409).json({
+            error: "A user with that email already exists",
+        });
+    }
+
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    await dbConn.query(
+        "UPDATE user SET username=?, password_hash=?, email=? WHERE username=?",
+        [username, passwordHash, email, curr_username]
+    );
+    return response.status(200).end();
+});
+
+usersRouter.delete("/:username", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
+    const { username } = request.params;
+    await dbConn.query("DELETE FROM user WHERE username=?", [username]);
+    return response.status(204).end();
 });
 
 module.exports = usersRouter;
