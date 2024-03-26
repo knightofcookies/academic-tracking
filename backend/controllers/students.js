@@ -1,5 +1,6 @@
 const studentsRouter = require("express").Router();
 const dbConn = require("../utils/db");
+const validator = require("email-validator");
 
 studentsRouter.get("/", async (request, response) => {
     const students = await dbConn.query("SELECT * FROM student");
@@ -9,7 +10,7 @@ studentsRouter.get("/", async (request, response) => {
 // TODO Implement the VARCHAR upper limit on the backend
 // TODO Prevent SQL Injection
 
-studentsRouter.post("/students", async (request, response) => {
+studentsRouter.post("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
     }

@@ -1,5 +1,7 @@
 const usersRouter = require("express").Router();
 const dbConn = require("../utils/db");
+const validator = require("email-validator");
+const bcrypt = require("bcrypt");
 
 // TODO Display warning on frontend that password cannot be padded with spaces
 
