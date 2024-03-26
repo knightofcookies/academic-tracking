@@ -3,7 +3,7 @@ const dbConn = require("../utils/db");
 
 // TODO Display warning on frontend that password cannot be padded with spaces
 
-usersRouter.get("/users", async (request, response) => {
+usersRouter.get("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
     }
