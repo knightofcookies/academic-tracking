@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
-app.use("/api/users", middleware.userExtractor, usersRouter);
+app.use("/api/users", middleware.userAdminExtractor, usersRouter);
 app.use("/api/admin", middleware.adminExtractor, adminRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/programmes", middleware.userAdminExtractor, programmesRouter);
