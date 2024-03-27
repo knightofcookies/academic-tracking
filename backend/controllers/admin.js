@@ -24,7 +24,7 @@ adminRouter.post("/", async (request, response) => {
         });
     }
 
-    usermame = username.trim();
+    username = username.trim();
     password = password.trim();
     email = email.trim();
     security_question = security_question.trim();
@@ -84,7 +84,7 @@ adminRouter.post("/", async (request, response) => {
         "INSERT INTO administrator (username, email, password_hash, security_question, security_answer_hash) VALUES (?, ?, ?, ?, ?)";
 
     await dbConn.query(query, [
-        username.trim(),
+        username,
         email,
         passwordHash,
         security_question,
