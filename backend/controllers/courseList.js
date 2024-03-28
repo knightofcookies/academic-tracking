@@ -15,3 +15,5 @@ courseList.get("/:id", async (request, respose) => {
         
     return respose.json(details);
 });
+
+module.exports = courseList;
