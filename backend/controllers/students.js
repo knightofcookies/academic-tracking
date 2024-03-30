@@ -1,3 +1,5 @@
+"use strict";
+
 const studentsRouter = require("express").Router();
 const dbConn = require("../utils/db");
 const validator = require("email-validator");
@@ -126,14 +128,6 @@ studentsRouter.post("/", async (request, response) => {
 studentsRouter.get("/:roll", async (request, response) => {
     let { roll } = request.params;
 
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
-
-    roll = roll.trim();
-
     if (!roll instanceof Number || roll % 1 != 0) {
         return response.status(400).json({
             error: "roll must be an integer",
@@ -158,14 +152,6 @@ studentsRouter.get("/:roll", async (request, response) => {
 
 studentsRouter.get("/:roll/courses", async (request, response) => {
     let { roll } = request.params;
-
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
-
-    roll = roll.trim();
 
     if (!roll instanceof Number || roll % 1 != 0) {
         return response.status(400).json({
@@ -206,14 +192,6 @@ studentsRouter.get("/:roll/courses", async (request, response) => {
 
 studentsRouter.get("/:roll/courses/:courseid", async (request, response) => {
     let { roll, courseid } = request.params;
-
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
-
-    roll = roll.trim();
 
     if (!roll instanceof Number || roll % 1 != 0) {
         return response.status(400).json({
@@ -268,14 +246,6 @@ studentsRouter.get("/:roll/courses/:courseid", async (request, response) => {
 studentsRouter.get("/:roll/semesters/", async (request, response) => {
     let { roll } = request.params;
 
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
-
-    roll = roll.trim();
-
     if (!roll instanceof Number || roll % 1 != 0) {
         return response.status(400).json({
             error: "roll must be an integer",
@@ -306,14 +276,6 @@ studentsRouter.get(
     "/:roll/semesters/:semester_number",
     async (request, response) => {
         let { roll, semester_number } = request.params;
-
-        if (!roll) {
-            return response.status(400).json({
-                error: "roll missing in request parameters",
-            });
-        }
-
-        roll = roll.trim();
 
         if (!roll instanceof Number || roll % 1 != 0) {
             return response.status(400).json({
@@ -378,12 +340,6 @@ studentsRouter.get(
 studentsRouter.get("/:roll/cpi", async (request, response) => {
     let { roll } = request.params;
 
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
-
     roll = roll.trim();
 
     if (!roll instanceof Number || roll % 1 != 0) {
@@ -423,14 +379,6 @@ studentsRouter.get("/:roll/cpi", async (request, response) => {
 
 studentsRouter.get("/:roll/spi/:semester_number", async (request, response) => {
     let { roll, semester_number } = request.params;
-
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
-
-    roll = roll.trim();
 
     if (!roll instanceof Number || roll % 1 != 0) {
         return response.status(400).json({
@@ -485,12 +433,6 @@ studentsRouter.put("/:roll", async (request, response) => {
 
     const { roll } = request.params;
     let { name, email, programme_id, year_of_joining } = request.body;
-
-    if (!roll) {
-        return response.status(400).json({
-            error: "roll missing in request parameters",
-        });
-    }
 
     if (!name) {
         return response.status(400).json({
@@ -593,6 +535,146 @@ studentsRouter.delete("/:roll", async (request, response) => {
     const { roll } = request.params;
     await dbConn.query("DELETE FROM student WHERE roll=?", [roll]);
     return response.status(204).end();
+});
+
+studentsRouter.post("/:roll/takes", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
+    const { roll } = request.params;
+    const { course_id, session_id, instructor_id, semester_number, grade } =
+        request.body;
+
+    if (!roll instanceof Number || roll % 1 !== 0) {
+        return response.status(400).json({ error: "'roll' must be a number." });
+    }
+
+    const studentList = await dbConn.query(
+        "SELECT * FROM student WHERE roll=?",
+        [roll]
+    );
+
+    if (studentList.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `Student with roll ${roll} not found` });
+    }
+
+    if (!session_id) {
+        return response.status(400).json({
+            error: "session_id missing in request body",
+        });
+    }
+
+    if (!session_id instanceof Number || session_id % 1 != 0) {
+        return response.status(400).json({
+            error: "session_id must be an integer",
+        });
+    }
+
+    const sessionWithId = await dbConn.query(
+        "SELECT * FROM session WHERE id=?",
+        [session_id]
+    );
+
+    if (sessionWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No session with ID ${session_id}` });
+    }
+
+    if (!course_id) {
+        return response.status(400).json({
+            error: "course_id missing in request body",
+        });
+    }
+
+    if (!course_id instanceof Number || course_id % 1 != 0) {
+        return response.status(400).json({
+            error: "course_id must be an integer",
+        });
+    }
+
+    const courseWithId = await dbConn.query("SELECT * FROM course WHERE id=?", [
+        course_id,
+    ]);
+
+    if (courseWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No course with ID ${course_id}` });
+    }
+
+    if (!instructor_id) {
+        return response.status(400).json({
+            error: "instructor_id missing in request body",
+        });
+    }
+
+    if (!instructor_id instanceof Number || instructor_id % 1 != 0) {
+        return response.status(400).json({
+            error: "instructor_id must be an integer",
+        });
+    }
+
+    const instructorWithId = await dbConn.query(
+        "SELECT * FROM instructor WHERE id=?",
+        [instructor_id]
+    );
+
+    if (instructorWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No instructor with ID ${instructor_id}` });
+    }
+
+    if (!semester_number instanceof Number || semester_number % 1 !== 0) {
+        return response
+            .status(400)
+            .json({ error: "'semester_number' must be a number." });
+    }
+
+    if (
+        !grade instanceof Number ||
+        grade % 1 !== 0 ||
+        grade < 1 ||
+        grade > 10
+    ) {
+        return response
+            .status(400)
+            .json({ error: "'grade' must be am integer from 1 to 10." });
+    }
+
+    const preExistingRecords = await dbConn.query(
+        "SELECT * FROM takes WHERE student_roll=? AND course_id=? AND session_id=?",
+        [roll, course_id, session_id]
+    );
+
+    if (preExistingRecords.length !== 0) {
+        return response.status(409).json({
+            error: "Duplicate entry",
+        });
+    }
+
+    const recordInTeaches = await dbConn.query(
+        "SELECT * FROM teaches WHERE instructor_id=? AND course_id=? AND session_id=?",
+        [instructor_id, course_id, session_id]
+    );
+
+    if (recordInTeaches.length === 0) {
+        return response.status(409).json({
+            error: "No instructors teach this course",
+        });
+    }
+
+    await dbConn.query(
+        `INSERT INTO takes (student_roll, course_id, session_id, 
+            taught_by, semester_number, grade) VALUES (?, ?, ?, ?, ?, ?)`,
+        [roll, course_id, session_id, instructor_id, semester_number, grade]
+    );
+
+    return response.status(201).end();
 });
 
 module.exports = studentsRouter;

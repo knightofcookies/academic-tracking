@@ -1,3 +1,5 @@
+"use strict";
+
 // Ensure this is run from the backend/ directory and not inside util/
 
 const readlineSync = require("readline-sync");

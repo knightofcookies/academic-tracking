@@ -1,3 +1,5 @@
+"use strict";
+
 const programmesRouter = require("express").Router();
 const dbConn = require("../utils/db");
 

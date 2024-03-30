@@ -1,3 +1,5 @@
+"use strict";
+
 const bcrypt = require("bcrypt");
 const loginRouter = require("express").Router();
 const dbConn = require("../utils/db");

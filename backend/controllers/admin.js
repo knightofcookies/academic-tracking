@@ -1,3 +1,5 @@
+"use strict";
+
 const bcrypt = require("bcrypt");
 const adminRouter = require("express").Router();
 const dbConn = require("../utils/db");
@@ -140,13 +142,13 @@ adminRouter.post("/changepassword", async (request, response) => {
 });
 
 adminRouter.put("/:username", async (request, response) => {
-    const { curr_username } = request.params;
-    let { username, email, password, security_question, security_answer } =
+    const { username } = request.params;
+    let { new_username, email, password, security_question, security_answer } =
         request.body;
 
     const adminSearch = dbConn.query(
         "SELECT username, email, security_question, security_answer_hash FROM administrator WHERE username=?",
-        [curr_username]
+        [username]
     );
     if (adminSearch.length === 0) {
         return response.status(400).json({
@@ -156,7 +158,7 @@ adminRouter.put("/:username", async (request, response) => {
 
     const administrator = adminSearch[0];
 
-    if (!username) {
+    if (!new_username) {
         return response.status(400).json({
             error: "username missing in request body",
         });
@@ -186,15 +188,15 @@ adminRouter.put("/:username", async (request, response) => {
         });
     }
 
-    username = username.trim();
+    new_username = new_username.trim();
     password = password.trim();
     email = email.trim();
     security_question = security_question.trim();
     security_answer = security_answer.trim();
 
-    if (!username || username.length < 3) {
+    if (!new_username || new_username.length < 3) {
         return response.status(400).json({
-            error: "username must be at least 3 characters long",
+            error: "new_username must be at least 3 characters long",
         });
     }
 
@@ -224,12 +226,12 @@ adminRouter.put("/:username", async (request, response) => {
 
     const administratorWithUsername = await dbConn.query(
         "SELECT * FROM administrator WHERE username=?",
-        [username]
+        [new_username]
     );
 
-    if (curr_username !== username && administratorWithUsername.length !== 0) {
+    if (username !== new_username && administratorWithUsername.length !== 0) {
         return response.status(409).json({
-            error: "An administrator with that username already exists",
+            error: `An administrator with username ${new_username} already exists`,
         });
     }
 
@@ -251,11 +253,11 @@ adminRouter.put("/:username", async (request, response) => {
     await dbConn.query(
         "UPDATE administrator SET username=?, password_hash=?, email=?, security_question=?, security_answer_hash=? WHERE username=?",
         [
-            username,
+            new_username,
             passwordHash,
             email,
-            security_answer.securityAnswerHash,
-            curr_username,
+            securityAnswerHash,
+            username,
         ]
     );
     return response.status(200).end();

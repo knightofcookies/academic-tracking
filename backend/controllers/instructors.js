@@ -1,3 +1,5 @@
+"use strict";
+
 const instructorsRouter = require("express").Router();
 const dbConn = require("../utils/db");
 
@@ -8,10 +10,6 @@ instructorsRouter.get("/", async (request, response) => {
 
 instructorsRouter.get("/:id", async (request, response) => {
     const { id } = request.params;
-
-    if (!id) {
-        return response.status(400).json({ error: "Missing parameter id" });
-    }
 
     if (!id instanceof Number || id % 1 !== 0) {
         return response.status(400).json({ error: "'id' must be a number." });
@@ -35,10 +33,6 @@ instructorsRouter.get("/:id", async (request, response) => {
 
 instructorsRouter.get("/:id/courses", async (request, response) => {
     const { id } = request.params;
-
-    if (!id) {
-        return response.status(400).json({ error: "Missing parameter id" });
-    }
 
     if (!id instanceof Number || id % 1 !== 0) {
         return response.status(400).json({ error: "'id' must be a number." });
@@ -142,6 +136,21 @@ instructorsRouter.put("/:id", async (request, response) => {
     const { id } = request.params;
     let { name, designation, dept_name } = request.body;
 
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({ error: "'id' must be a number." });
+    }
+
+    const instructorList = await dbConn.query(
+        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        [id]
+    );
+
+    if (instructorList.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `Instructor with id ${id} not found` });
+    }
+
     if (!name) {
         return response.status(400).json({
             error: "name missing in request body",
@@ -205,8 +214,111 @@ instructorsRouter.delete("/:id", async (request, response) => {
     }
 
     const { id } = request.params;
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({ error: "'id' must be a number." });
+    }
+
+    const instructorList = await dbConn.query(
+        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        [id]
+    );
+
+    if (instructorList.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `Instructor with id ${id} not found` });
+    }
+
     await dbConn.query("DELETE FROM instructor WHERE id=?", [id]);
     return response.status(204).end();
+});
+
+instructorsRouter.post("/:id/teaches", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
+    let { id } = request.params;
+    let { course_id, session_id } = request.body;
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({ error: "'id' must be a number." });
+    }
+
+    const instructorList = await dbConn.query(
+        "SELECT * FROM instructor WHERE id=?",
+        [id]
+    );
+
+    if (instructorList.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `Instructor with id ${id} not found` });
+    }
+
+    if (!session_id) {
+        return response.status(400).json({
+            error: "session_id missing in request body",
+        });
+    }
+
+    if (!session_id instanceof Number || session_id % 1 != 0) {
+        return response.status(400).json({
+            error: "session_id must be an integer",
+        });
+    }
+
+    const sessionWithId = await dbConn.query(
+        "SELECT * FROM session WHERE id=?",
+        [session_id]
+    );
+
+    if (sessionWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No session with ID ${session_id}` });
+    }
+
+    if (!course_id) {
+        return response.status(400).json({
+            error: "course_id missing in request body",
+        });
+    }
+
+    if (!course_id instanceof Number || course_id % 1 != 0) {
+        return response.status(400).json({
+            error: "course_id must be an integer",
+        });
+    }
+
+    const courseWithId = await dbConn.query("SELECT * FROM course WHERE id=?", [
+        course_id,
+    ]);
+
+    if (courseWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No course with ID ${course_id}` });
+    }
+
+    const preExistingRecords = await dbConn.query(
+        "SELECT * FROM teaches WHERE instructor_id=? AND course_id=? AND session_id=?",
+        [id, course_id, session_id]
+    );
+
+    if (preExistingRecords.length !== 0) {
+        return response.status(409).json({
+            error: "Duplicate entry",
+        });
+    }
+
+    await dbConn.query(
+        `INSERT INTO teaches (instructor_id, course_id, session_id) VALUES (?, ?, ?)`,
+        [id, course_id, session_id]
+    );
+
+    return response.status(201).end();
 });
 
 module.exports = instructorsRouter;

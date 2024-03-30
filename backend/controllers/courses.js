@@ -1,3 +1,5 @@
+"use strict";
+
 const coursesRouter = require("express").Router();
 const dbConn = require("../utils/db");
 
@@ -8,10 +10,6 @@ coursesRouter.get("/", async (request, response) => {
 
 coursesRouter.get("/:id", async (request, response) => {
     const { id } = request.params;
-
-    if (!id) {
-        return response.status(400).json({ error: "Missing parameter id" });
-    }
 
     if (!id instanceof Number || id % 1 !== 0) {
         return response.status(400).json({ error: "'id' must be a number." });
@@ -35,10 +33,6 @@ coursesRouter.get("/:id", async (request, response) => {
 
 coursesRouter.get("/:id/sessions", async (request, response) => {
     const { id } = request.params;
-
-    if (!id) {
-        return response.status(400).json({ error: "Missing parameter id" });
-    }
 
     if (!id instanceof Number || id % 1 !== 0) {
         return response.status(400).json({ error: "'id' must be a number." });
@@ -71,10 +65,6 @@ coursesRouter.get("/:id/sessions", async (request, response) => {
 
 coursesRouter.get("/:id/sessions/:session_id", async (request, response) => {
     const { id, session_id } = request.params;
-
-    if (!id) {
-        return response.status(400).json({ error: "Missing parameter id" });
-    }
 
     if (!id instanceof Number || id % 1 !== 0) {
         return response.status(400).json({ error: "'id' must be a number." });

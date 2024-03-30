@@ -1,3 +1,5 @@
+"use strict";
+
 const departmentsRouter = require("express").Router();
 const dbConn = require("../utils/db");
 
@@ -53,11 +55,6 @@ departmentsRouter.put("/:name", async (request, response) => {
     const { name } = request.params;
     const { new_name } = request.body;
 
-    if (!name) {
-        return response.status(400).json({
-            error: "name missing in request parameters",
-        });
-    }
     if (!new_name) {
         return response.status(400).json({
             error: "new_name missing in request body",

@@ -1,6 +1,10 @@
+"use strict";
+
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 const dbConn = require("./db");
+const Errors = require("./errors");
+const HttpStatus = require("http-status");
 
 const requestLogger = (request, response, next) => {
     logger.info("Method:", request.method);
@@ -23,9 +27,33 @@ const errorHandler = (error, request, response, next) => {
         return response.status(401).json({ error: error.message });
     } else if (error.name === "TokenExpiredError") {
         return response.status(401).json({ error: "token expired" });
+    } else if (error instanceof Errors.BadRequest) {
+        return res
+            .status(HttpStatus.BAD_REQUEST)
+            .send({ message: error.message });
+    } else if (error instanceof Errors.Forbidden) {
+        return res.status(HttpStatus.FORBIDDEN).send({ message: error.message });
+    } else if (error instanceof Errors.NotFound) {
+        return res.status(HttpStatus.NOT_FOUND).send({ message: error.message });
+    } else if (error instanceof Errors.UnprocessableEntity) {
+        return res
+            .status(HttpStatus.UNPROCESSABLE_ENTITY)
+            .send({ message: error.message });
+    } else if (error instanceof Errors.Conflict) {
+        return res.status(HttpStatus.CONFLICT).send({ message: error.message });
+    } else if (error instanceof Errors.Unauthorized) {
+        return res
+            .status(HttpStatus.UNAUTHORIZED)
+            .send({ message: error.message });
+    } else if (error instanceof Errors.InternalServerError) {
+        return res
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({ message: error.message });
     }
-
-    next(error);
+    console.log(error);
+    return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        error,
+    });
 };
 
 const tokenExtractor = (request, response, next) => {

@@ -1,3 +1,7 @@
+"use strict";
+
+// https://www.w3schools.com/js/js_strict.asp
+
 const usersRouter = require("express").Router();
 const dbConn = require("../utils/db");
 const validator = require("email-validator");
@@ -143,12 +147,12 @@ usersRouter.put("/:username", async (request, response) => {
         return response.status(403).end();
     }
 
-    const { curr_username } = request.params;
-    let { username, email, password } = request.body;
+    const { username } = request.params;
+    let { new_username, email, password } = request.body;
 
     const userSearch = dbConn.query(
         "SELECT username, email FROM user WHERE username=?",
-        [curr_username]
+        [username]
     );
     if (userSearch.length === 0) {
         return response.status(400).json({
@@ -158,9 +162,9 @@ usersRouter.put("/:username", async (request, response) => {
 
     const user = userSearch[0];
 
-    if (!username) {
+    if (!new_username) {
         return response.status(400).json({
-            error: "username missing in request body",
+            error: "new_username missing in request body",
         });
     }
 
@@ -176,13 +180,13 @@ usersRouter.put("/:username", async (request, response) => {
         });
     }
 
-    username = username.trim();
+    new_username = new_username.trim();
     password = password.trim();
     email = email.trim();
 
-    if (!username || username.length < 3) {
+    if (!new_username || new_username.length < 3) {
         return response.status(400).json({
-            error: "username must be at least 3 characters long",
+            error: "new_username must be at least 3 characters long",
         });
     }
 
@@ -200,12 +204,12 @@ usersRouter.put("/:username", async (request, response) => {
 
     const userWithUsername = await dbConn.query(
         "SELECT * FROM user WHERE username=?",
-        [username]
+        [new_username]
     );
 
-    if (curr_username !== username && userWithUsername.length !== 0) {
+    if (username !== new_username && userWithUsername.length !== 0) {
         return response.status(409).json({
-            error: "A user with that username already exists",
+            error: `A user with the username ${new_username} already exists`,
         });
     }
 
@@ -224,7 +228,7 @@ usersRouter.put("/:username", async (request, response) => {
     const passwordHash = await bcrypt.hash(password, saltRounds);
     await dbConn.query(
         "UPDATE user SET username=?, password_hash=?, email=? WHERE username=?",
-        [username, passwordHash, email, curr_username]
+        [new_username, passwordHash, email, username]
     );
     return response.status(200).end();
 });

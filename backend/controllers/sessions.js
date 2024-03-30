@@ -1,3 +1,5 @@
+"use strict";
+
 const sessionsRouter = require("express").Router();
 const dbConn = require("../utils/db");
 
@@ -6,64 +8,48 @@ sessionsRouter.get("/", async (request, response) => {
     return response.json(sessions);
 });
 
-sessionsRouter.get("/:sessionId", async (req, res) => {
-    let { sessionId } = request.params;
+sessionsRouter.get("/:session_id", async (req, res) => {
+    let { session_id } = request.params;
 
-    if (!sessionId) {
+    if (!session_id instanceof Number || session_id % 1 != 0) {
         return response.status(400).json({
-            error: "sessionId missing in request parameters",
-        });
-    }
-
-    sessionId = sessionId.trim();
-
-    if (!sessionId instanceof Number || sessionId % 1 != 0) {
-        return response.status(400).json({
-            error: "sessionId must be an integer",
+            error: "session_id must be an integer",
         });
     }
 
     const sessionWithId = await dbConn.query(
         "SELECT * FROM session WHERE id=?",
-        [sessionId]
+        [session_id]
     );
 
     if (sessionWithId.length === 0) {
         return response
             .status(404)
-            .json({ error: `No session with ID ${sessionId}` });
+            .json({ error: `No session with ID ${session_id}` });
     }
 
     const [session] = sessionWithId;
     return response.json(session);
 });
 
-sessionsRouter.get("/:sessionId/courses", async (req, res) => {
-    let { sessionId } = request.params;
+sessionsRouter.get("/:session_id/courses", async (req, res) => {
+    let { session_id } = request.params;
 
-    if (!sessionId) {
+    if (!session_id instanceof Number || session_id % 1 != 0) {
         return response.status(400).json({
-            error: "sessionId missing in request parameters",
-        });
-    }
-
-    sessionId = sessionId.trim();
-
-    if (!sessionId instanceof Number || sessionId % 1 != 0) {
-        return response.status(400).json({
-            error: "sessionId must be an integer",
+            error: "session_id must be an integer",
         });
     }
 
     const sessionWithId = await dbConn.query(
         "SELECT * FROM session WHERE id=?",
-        [sessionId]
+        [session_id]
     );
 
     if (sessionWithId.length === 0) {
         return response
             .status(404)
-            .json({ error: `No session with ID ${sessionId}` });
+            .json({ error: `No session with ID ${session_id}` });
     }
 
     const coursesQuery = `SELECT course_id, course.title, course.code, 
@@ -76,7 +62,7 @@ sessionsRouter.get("/:sessionId/courses", async (req, res) => {
         JOIN session ON session.id = session_id
         WHERE session_id=3;`;
 
-    const courses = await dbConn.query(coursesQuery, [sessionId]);
+    const courses = await dbConn.query(coursesQuery, [session_id]);
 
     return response.json(courses);
 });

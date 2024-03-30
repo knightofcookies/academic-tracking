@@ -1,6 +1,11 @@
+"use strict";
+
 const mysql = require("mysql");
 const config = require("./config");
 const util = require("util");
+
+// TODO Use connection pooling
+// TODO https://www.npmjs.com/package/mysql-error-keys
 
 const connection = mysql.createConnection({
     host: config.MYSQL_HOST,
