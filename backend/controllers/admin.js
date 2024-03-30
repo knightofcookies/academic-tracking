@@ -4,7 +4,6 @@ const dbConn = require("../utils/db");
 const jwt = require("jsonwebtoken");
 const validator = require("email-validator");
 
-// TODO Add PUT and DELETE requests
 // https://stackoverflow.com/questions/46693430/what-are-salt-rounds-and-how-are-salts-stored-in-bcrypt
 // TODO Display warning on frontend that password and security_answer cannot be padded with spaces
 

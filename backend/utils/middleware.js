@@ -71,7 +71,7 @@ const adminExtractor = async (request, response, next) => {
     }
 
     next();
-}; // TODO Check if admin only routes can be accessed by user and vice versa
+};
 
 const userAdminExtractor = async (request, response, next) => {
     const decodedToken = jwt.verify(request.token, process.env.SECRET);

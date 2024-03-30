@@ -6,6 +6,68 @@ instructorsRouter.get("/", async (request, response) => {
     return response.json(instructors);
 });
 
+instructorsRouter.get("/:id", async (request, response) => {
+    const { id } = request.params;
+
+    if (!id) {
+        return response.status(400).json({ error: "Missing parameter id" });
+    }
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({ error: "'id' must be a number." });
+    }
+
+    const instructorList = await dbConn.query(
+        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        [id]
+    );
+
+    if (instructorList.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `Instructor with id ${id} not found` });
+    }
+
+    const [instructor] = instructorList;
+
+    return response.json(instructor);
+});
+
+instructorsRouter.get("/:id/courses", async (request, response) => {
+    const { id } = request.params;
+
+    if (!id) {
+        return response.status(400).json({ error: "Missing parameter id" });
+    }
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({ error: "'id' must be a number." });
+    }
+
+    const instructorList = await dbConn.query(
+        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        [id]
+    );
+
+    if (instructorList.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `Instructor with id ${id} not found` });
+    }
+
+    const query = `SELECT session_id, session.start_year, session.season, 
+    course_id, course.code course_code, course.title course_title, 
+    course.dept_name course_dept_name 
+    FROM teaches JOIN session ON session.id = teaches.session_id 
+    JOIN instructor ON instructor.id = teaches.instructor_id 
+    JOIN course ON course.id = teaches.course_id
+    WHERE instructor.id=?;`;
+
+    const courses = await dbConn.query(query, [id]);
+
+    return response.json(courses);
+});
+
 instructorsRouter.post("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();

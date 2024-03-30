@@ -6,6 +6,81 @@ sessionsRouter.get("/", async (request, response) => {
     return response.json(sessions);
 });
 
+sessionsRouter.get("/:sessionId", async (req, res) => {
+    let { sessionId } = request.params;
+
+    if (!sessionId) {
+        return response.status(400).json({
+            error: "sessionId missing in request parameters",
+        });
+    }
+
+    sessionId = sessionId.trim();
+
+    if (!sessionId instanceof Number || sessionId % 1 != 0) {
+        return response.status(400).json({
+            error: "sessionId must be an integer",
+        });
+    }
+
+    const sessionWithId = await dbConn.query(
+        "SELECT * FROM session WHERE id=?",
+        [sessionId]
+    );
+
+    if (sessionWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No session with ID ${sessionId}` });
+    }
+
+    const [session] = sessionWithId;
+    return response.json(session);
+});
+
+sessionsRouter.get("/:sessionId/courses", async (req, res) => {
+    let { sessionId } = request.params;
+
+    if (!sessionId) {
+        return response.status(400).json({
+            error: "sessionId missing in request parameters",
+        });
+    }
+
+    sessionId = sessionId.trim();
+
+    if (!sessionId instanceof Number || sessionId % 1 != 0) {
+        return response.status(400).json({
+            error: "sessionId must be an integer",
+        });
+    }
+
+    const sessionWithId = await dbConn.query(
+        "SELECT * FROM session WHERE id=?",
+        [sessionId]
+    );
+
+    if (sessionWithId.length === 0) {
+        return response
+            .status(404)
+            .json({ error: `No session with ID ${sessionId}` });
+    }
+
+    const coursesQuery = `SELECT course_id, course.title, course.code, 
+        course.dept_name course_dept_name,
+        instructor_id, name, designation,
+        instructor.dept_name instructor_dept_name 
+        FROM teaches 
+        JOIN instructor ON instructor.id = instructor_id 
+        JOIN course ON course.id = course_id 
+        JOIN session ON session.id = session_id
+        WHERE session_id=3;`;
+
+    const courses = await dbConn.query(coursesQuery, [sessionId]);
+
+    return response.json(courses);
+});
+
 sessionsRouter.post("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
@@ -50,7 +125,7 @@ sessionsRouter.post("/", async (request, response) => {
         "SELECT * FROM session WHERE start_year=? AND season=?",
         [start_year, season]
     );
-    if (session.length === 0) {
+    if (session.length !== 0) {
         return response.status(400).json({
             error: "A session with the same start_year and season values already exists",
         });
