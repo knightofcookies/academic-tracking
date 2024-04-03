@@ -15,6 +15,7 @@ const coursesRouter = require("./controllers/courses");
 const instructorsRouter = require("./controllers/instructors");
 const studentsRouter = require("./controllers/students");
 const sessionsRouter = require("./controllers/sessions");
+const signupRouter = require("./controllers/signup");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/courses", middleware.userAdminExtractor, coursesRouter);
 app.use("/api/sessions", middleware.userAdminExtractor, sessionsRouter);
 app.use("/api/instructors", middleware.userAdminExtractor, instructorsRouter);
 app.use("/api/students", middleware.userAdminExtractor, studentsRouter);
+app.use("/api/signup", signupRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

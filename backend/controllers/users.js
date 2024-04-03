@@ -19,6 +19,10 @@ usersRouter.get("/", async (request, response) => {
 });
 
 usersRouter.post("/", async (request, response) => {
+    if (!request.administrator) {
+        return response.status(403).end();
+    }
+
     let { username, email, password } = request.body;
 
     if (!username) {
