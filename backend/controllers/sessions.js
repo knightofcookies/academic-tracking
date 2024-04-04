@@ -89,7 +89,7 @@ sessionsRouter.post("/", async (request, response) => {
     season = season.trim().toLowerCase();
     start_year = start_year.trim();
 
-    if (!season === "monsoon" || !season === "winter") {
+    if (!(season === "monsoon") && !(season === "winter")) {
         return response.status(400).json({
             error: "season must be monsoon or winter",
         });
