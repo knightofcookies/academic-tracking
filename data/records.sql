@@ -1,3 +1,4 @@
+-- session
 INSERT INTO session (start_year, season) VALUES
 ('2022', 'Monsoon'),
 ('2022', 'Winter'),
