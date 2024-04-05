@@ -14,7 +14,7 @@ CREATE TABLE department (
 
 CREATE TABLE programme (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    department_id VARCHAR(50) NOT NULL,
+    department_id INT NOT NULL,
     degree VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
     FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
@@ -24,7 +24,7 @@ CREATE TABLE instructor (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     designation VARCHAR(50) NOT NULL,
-    department_id VARCHAR(50) NOT NULL,
+    department_id INT NOT NULL,
     FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE course (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     code VARCHAR(5) NOT NULL,
-    department_id VARCHAR(50) NOT NULL,
+    department_id INT NOT NULL,
     FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
 );
 
