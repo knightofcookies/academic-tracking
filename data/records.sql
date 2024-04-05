@@ -14,7 +14,15 @@ INSERT INTO session (start_year, season) VALUES
 -- department
 INSERT INTO department (name) VALUES
 ('CSE'),
-('ECE');
+('ECE'),
+('ME'),
+('CE'),
+('EE'),
+('CHE'),
+('MATH'),
+('PHYSICS'),
+('HSS'),
+('BIO');
 
 -- programme
 INSERT INTO programme (dept_name, degree, name) VALUES
@@ -23,7 +31,11 @@ INSERT INTO programme (dept_name, degree, name) VALUES
 ('CSE', 'Ph.D.', 'Computer Science and Engineering'),
 ('ECE', 'B.Tech.', 'Electronics and Communication Engineering'),
 ('ECE', 'M.Tech.', 'Electronics and Communication Engineering'),
-('ECE', 'Ph.D.', 'Electronics and Communication Engineering');
+('ECE', 'Ph.D.', 'Electronics and Communication Engineering'),
+('ME', 'B.Tech.', 'Mechanical Engineering'),
+('CE', 'B.Tech.', 'Civil Engineering'),
+('EE', 'B.Tech.', 'Electrical Engineering'),
+('CHE', 'B.Tech.', 'Chemical Engineering');
 
 -- instructor
 INSERT INTO instructor (name, designation, dept_name) VALUES
@@ -114,4 +126,3 @@ INSERT INTO administrator (username, email, password_hash, security_question, se
 ('admin8', 'admin8@iiit.ac.in', 'admin_password8', 'What is your favorite book?', 'answer_hash8'),
 ('admin9', 'admin9@iiit.ac.in', 'admin_password9', 'What is your favorite sport?', 'answer_hash9'),
 ('admin10', 'admin10@iiit.ac.in', 'admin_password10', 'What is your favorite holiday destination?', 'answer_hash10');
-
