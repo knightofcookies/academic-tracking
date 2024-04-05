@@ -16,7 +16,7 @@ instructorsRouter.get("/:id", async (request, response) => {
     }
 
     const instructorList = await dbConn.query(
-        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        "SELECT * FROM instructor WHERE id=?",
         [id]
     );
 
@@ -39,7 +39,7 @@ instructorsRouter.get("/:id/courses", async (request, response) => {
     }
 
     const instructorList = await dbConn.query(
-        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        "SELECT * FROM instructor WHERE id=?",
         [id]
     );
 
@@ -51,7 +51,7 @@ instructorsRouter.get("/:id/courses", async (request, response) => {
 
     const query = `SELECT session_id, session.start_year, session.season, 
     course_id, course.code course_code, course.title course_title, 
-    course.dept_name course_dept_name 
+    course.department_id course_dept_id 
     FROM teaches JOIN session ON session.id = teaches.session_id 
     JOIN instructor ON instructor.id = teaches.instructor_id 
     JOIN course ON course.id = teaches.course_id
@@ -67,7 +67,7 @@ instructorsRouter.post("/", async (request, response) => {
         return response.status(403).end();
     }
 
-    let { name, designation, dept_name } = request.body;
+    let { name, designation, department_id } = request.body;
 
     if (!name) {
         return response.status(400).json({
@@ -81,15 +81,14 @@ instructorsRouter.post("/", async (request, response) => {
         });
     }
 
-    if (!dept_name) {
+    if (!department_id) {
         return response.status(400).json({
-            error: "dept_name missing in request body",
+            error: "department_id missing in request body",
         });
     }
 
     name = name.trim();
     designation = designation.trim();
-    dept_name = dept_name.trim();
 
     if (name.length < 2) {
         return response.status(400).json({
@@ -103,25 +102,25 @@ instructorsRouter.post("/", async (request, response) => {
         });
     }
 
-    if (dept_name.length < 2) {
+    if (!department_id instanceof Number || department_id % 1 !== 0) {
         return response.status(400).json({
-            error: "dept_name cannot be less than 2 characters long",
+            error: "department_id has to be a number",
         });
     }
 
     const department = await dbConn.query(
-        "SELECT * FROM department WHERE name=?",
-        [dept_name]
+        "SELECT * FROM department WHERE id=?",
+        [department_id]
     );
     if (department.length === 0) {
         return response.status(400).json({
-            error: "Invalid dept_name",
+            error: "Invalid department_id",
         });
     }
 
     const res = await dbConn.query(
-        "INSERT INTO instructor (name, designation, dept_name) VALUES (?, ?, ?)",
-        [name, designation, dept_name]
+        "INSERT INTO instructor (name, designation, department_id) VALUES (?, ?, ?)",
+        [name, designation, department_id]
     );
     return response.status(201).json({
         id: res.insertId,
@@ -134,14 +133,14 @@ instructorsRouter.put("/:id", async (request, response) => {
     }
 
     const { id } = request.params;
-    let { name, designation, dept_name } = request.body;
+    let { name, designation, department_id } = request.body;
 
     if (!id instanceof Number || id % 1 !== 0) {
         return response.status(400).json({ error: "'id' must be a number." });
     }
 
     const instructorList = await dbConn.query(
-        "SELECT id, name, designation, dept_name FROM instructor WHERE id=?",
+        "SELECT id, name, designation, department_id FROM instructor WHERE id=?",
         [id]
     );
 
@@ -163,15 +162,14 @@ instructorsRouter.put("/:id", async (request, response) => {
         });
     }
 
-    if (!dept_name) {
+    if (!department_id) {
         return response.status(400).json({
-            error: "dept_name missing in request body",
+            error: "department_id missing in request body",
         });
     }
 
     name = name.trim();
     designation = designation.trim();
-    dept_name = dept_name.trim();
 
     if (name.length < 2) {
         return response.status(400).json({
@@ -185,25 +183,25 @@ instructorsRouter.put("/:id", async (request, response) => {
         });
     }
 
-    if (dept_name.length < 2) {
+    if (!department_id instanceof Number || department_id % 1 !== 0) {
         return response.status(400).json({
-            error: "dept_name cannot be less than 2 characters long",
+            error: "department_id has to be a number",
         });
     }
 
     const department = await dbConn.query(
-        "SELECT * FROM department WHERE name=?",
-        [dept_name]
+        "SELECT * FROM department WHERE id=?",
+        [department_id]
     );
     if (department.length === 0) {
         return response.status(400).json({
-            error: "Invalid dept_name",
+            error: "Invalid department_id",
         });
     }
 
     await dbConn.query(
-        "UPDATE instructor SET name=?, designation=?, dept_name=? WHERE id=?",
-        [name, designation, dept_name, id]
+        "UPDATE instructor SET name=?, designation=?, department_id=? WHERE id=?",
+        [name, designation, department_id, id]
     );
     return response.status(200).end();
 });

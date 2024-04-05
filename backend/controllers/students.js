@@ -172,11 +172,11 @@ studentsRouter.get("/:roll/courses", async (request, response) => {
 
     const coursesQuery = `SELECT semester_number, grade,
         course_id, course.title, course.code, 
-        course.dept_name course_dept_name,
+        course.department_id course_dept_id,
         session_id, session.start_year, session.season,
         taught_by instructor_id, instructor.name instructor_name,
         instructor.designation instructor_designation,
-        instructor.dept_name instructor_dept_name
+        instructor.department_id instructor_dept_id
         FROM takes 
         JOIN student ON student.roll = student_roll 
         JOIN course ON course.id = course_id
@@ -220,11 +220,11 @@ studentsRouter.get("/:roll/courses/:courseid", async (request, response) => {
 
     const courseQuery = `SELECT semester_number, grade,
         course_id, course.title, course.code, 
-        course.dept_name course_dept_name,
+        course.department_id course_dept_id,
         session_id, session.start_year, session.season,
         taught_by instructor_id, instructor.name instructor_name,
         instructor.designation instructor_designation,
-        instructor.dept_name instructor_dept_name
+        instructor.department_id instructor_dept_id
         FROM takes 
         JOIN student ON student.roll = student_roll 
         JOIN course ON course.id = course_id
@@ -310,11 +310,11 @@ studentsRouter.get(
 
         const coursesQuery = `SELECT grade,
         course_id, course.title, course.code, 
-        course.dept_name course_dept_name,
+        course.department_id course_dept_id,
         session_id, session.start_year, session.season,
         taught_by instructor_id, instructor.name instructor_name,
         instructor.designation instructor_designation,
-        instructor.dept_name instructor_dept_name
+        instructor.department_id instructor_dept_id
         FROM takes 
         JOIN student ON student.roll = student_roll 
         JOIN course ON course.id = course_id
@@ -533,6 +533,18 @@ studentsRouter.delete("/:roll", async (request, response) => {
     }
 
     const { roll } = request.params;
+
+    const studentWithRoll = await dbConn.query(
+        "SELECT * FROM student WHERE roll=?",
+        [roll]
+    );
+
+    if (studentWithRoll.length === 0) {
+        return response.status(404).json({
+            error: "A student with that roll number does not exist",
+        });
+    }
+
     await dbConn.query("DELETE FROM student WHERE roll=?", [roll]);
     return response.status(204).end();
 });

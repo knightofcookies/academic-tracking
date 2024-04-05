@@ -13,7 +13,7 @@ programmesRouter.post("/", async (request, response) => {
         return response.status(403).end();
     }
 
-    let { dept_name, degree, name } = request.body;
+    let { department_id, degree, name } = request.body;
 
     if (!degree) {
         return response.status(400).json({
@@ -27,15 +27,14 @@ programmesRouter.post("/", async (request, response) => {
         });
     }
 
-    if (!dept_name) {
+    if (!department_id) {
         return response.status(400).json({
-            error: "dept_name missing in request body",
+            error: "department_id missing in request body",
         });
     }
 
     degree = degree.trim();
     name = name.trim();
-    dept_name = dept_name.trim();
 
     if (name.length < 2) {
         return response.status(400).json({
@@ -49,25 +48,25 @@ programmesRouter.post("/", async (request, response) => {
         });
     }
 
-    if (dept_name.length < 2) {
+    if (!department_id instanceof Number || department_id % 1 !== 0) {
         return response.status(400).json({
-            error: "dept_name cannot be less than 2 characters long",
+            error: "department_id has to be a number",
         });
     }
 
     const department = await dbConn.query(
-        "SELECT * FROM department WHERE name=?",
-        [dept_name]
+        "SELECT * FROM department WHERE id=?",
+        [department_id]
     );
     if (department.length === 0) {
         return response.status(400).json({
-            error: "Invalid dept_name",
+            error: "Invalid department_id",
         });
     }
 
     const res = await dbConn.query(
-        "INSERT INTO programme (name, degree, dept_name) VALUES (?, ?, ?)",
-        [name, degree, dept_name]
+        "INSERT INTO programme (name, degree, department_id) VALUES (?, ?, ?)",
+        [name, degree, department_id]
     );
     return response.status(201).json({
         id: res.insertId,
@@ -80,7 +79,7 @@ programmesRouter.put("/:id", async (request, response) => {
     }
 
     const { id } = request.params;
-    let { dept_name, degree, name } = request.body;
+    let { department_id, degree, name } = request.body;
 
     if (!degree) {
         return response.status(400).json({
@@ -94,15 +93,14 @@ programmesRouter.put("/:id", async (request, response) => {
         });
     }
 
-    if (!dept_name) {
+    if (!department_id) {
         return response.status(400).json({
-            error: "dept_name missing in request body",
+            error: "department_id missing in request body",
         });
     }
 
     degree = degree.trim();
     name = name.trim();
-    dept_name = dept_name.trim();
 
     if (name.length < 2) {
         return response.status(400).json({
@@ -116,25 +114,36 @@ programmesRouter.put("/:id", async (request, response) => {
         });
     }
 
-    if (dept_name.length < 2) {
+    if (!department_id instanceof Number || department_id % 1 !== 0) {
         return response.status(400).json({
-            error: "dept_name cannot be less than 2 characters long",
+            error: "department_id has to be a number",
         });
     }
 
     const department = await dbConn.query(
-        "SELECT * FROM department WHERE name=?",
-        [dept_name]
+        "SELECT * FROM department WHERE id=?",
+        [department_id]
     );
     if (department.length === 0) {
         return response.status(400).json({
-            error: "Invalid dept_name",
+            error: "Invalid department_id",
+        });
+    }
+
+    const programmeWithId = await dbConn.query(
+        "SELECT * FROM programme WHERE id=?",
+        [id]
+    );
+
+    if (programmeWithId.legnth === 0) {
+        return response.status(404).json({
+            error: "No such programme exists.",
         });
     }
 
     await dbConn.query(
-        "UPDATE programme SET name=?, degree=?, dept_name=? WHERE id=?",
-        [name, degree, dept_name, id]
+        "UPDATE programme SET name=?, degree=?, department_id=? WHERE id=?",
+        [name, degree, department_id, id]
     );
     return response.status(200).end();
 });
@@ -145,6 +154,18 @@ programmesRouter.delete("/:id", async (request, response) => {
     }
 
     const { id } = request.params;
+
+    const programmeWithId = await dbConn.query(
+        "SELECT * FROM programme WHERE id=?",
+        [id]
+    );
+
+    if (programmeWithId.legnth === 0) {
+        return response.status(404).json({
+            error: "No such programme exists.",
+        });
+    }
+
     await dbConn.query("DELETE FROM programme WHERE id=?", [id]);
     return response.status(204).end();
 });

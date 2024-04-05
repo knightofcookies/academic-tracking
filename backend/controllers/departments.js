@@ -43,17 +43,27 @@ departmentsRouter.post("/", async (request, response) => {
         });
     }
 
-    await dbConn.query("INSERT INTO department (name) VALUES (?)", [name]);
-    return response.status(201).end();
+    const res = await dbConn.query("INSERT INTO department (name) VALUES (?)", [
+        name,
+    ]);
+    return response.status(201).json({
+        id: res.insertId,
+    });
 });
 
-departmentsRouter.put("/:name", async (request, response) => {
+departmentsRouter.put("/:id", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
     }
 
-    const { name } = request.params;
+    const { id } = request.params;
     const { new_name } = request.body;
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({
+            error: "parameter 'id' must be a number.",
+        });
+    }
 
     if (!new_name) {
         return response.status(400).json({
@@ -61,12 +71,21 @@ departmentsRouter.put("/:name", async (request, response) => {
         });
     }
 
-    name = name.trim();
     new_name = new_name.trim();
 
     if (!new_name || new_name.length < 2) {
         return response.status(400).json({
             error: "new_name cannot be less than 2 characters long",
+        });
+    }
+
+    const departmentWithId = await dbConn.query(
+        "SELECT * FROM department WHERE id=?",
+        [id]
+    );
+    if (departmentWithId.length === 0) {
+        return response.status(404).json({
+            error: "A department with that id does not exist",
         });
     }
 
@@ -80,20 +99,35 @@ departmentsRouter.put("/:name", async (request, response) => {
         });
     }
 
-    await dbConn.query("UPDATE department SET name=? WHERE name=?", [
+    await dbConn.query("UPDATE department SET name=? WHERE id=?", [
         new_name,
-        name,
+        id,
     ]);
     return response.status(200).end();
 });
 
-departmentsRouter.delete("/:name", async (request, response) => {
+departmentsRouter.delete("/:id", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
     }
 
-    const { name } = request.params;
-    await dbConn.query("DELETE FROM department WHERE name=?", [name]);
+    const { id } = request.params;
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({ error: "'id' must be a number." });
+    }
+
+    const departmentWithId = await dbConn.query(
+        "SELECT * FROM department WHERE id=?",
+        [id]
+    );
+    if (departmentWithId.length === 0) {
+        return response.status(404).json({
+            error: "A department with that id does not exist",
+        });
+    }
+
+    await dbConn.query("DELETE FROM department WHERE id=?", [id]);
     return response.status(204).end();
 });
 

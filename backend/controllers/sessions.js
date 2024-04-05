@@ -55,12 +55,12 @@ sessionsRouter.get("/:session_id/courses", async (req, res) => {
     const coursesQuery = `SELECT course_id, course.title, course.code, 
         course.dept_name course_dept_name,
         instructor_id, name, designation,
-        instructor.dept_name instructor_dept_name 
+        instructor.department_id instructor_dept_id
         FROM teaches 
         JOIN instructor ON instructor.id = instructor_id 
         JOIN course ON course.id = course_id 
         JOIN session ON session.id = session_id
-        WHERE session_id=3;`;
+        WHERE session_id=?;`;
 
     const courses = await dbConn.query(coursesQuery, [session_id]);
 
@@ -177,6 +177,17 @@ sessionsRouter.put("/:id", async (request, response) => {
         });
     }
 
+    const sessionWithId = await dbConn.query(
+        "SELECT * FROM session WHERE id=?",
+        [id]
+    );
+
+    if (sessionWithId.legnth === 0) {
+        return response.status(404).json({
+            error: "No such session exists.",
+        });
+    }
+
     await dbConn.query("UPDATE session SET start_year=?, season=? WHERE id=?", [
         start_year,
         season,
@@ -191,6 +202,18 @@ sessionsRouter.delete("/:id", async (request, response) => {
     }
 
     const { id } = request.params;
+
+    const sessionWithId = await dbConn.query(
+        "SELECT * FROM session WHERE id=?",
+        [id]
+    );
+
+    if (sessionWithId.legnth === 0) {
+        return response.status(404).json({
+            error: "No such session exists.",
+        });
+    }
+
     await dbConn.query("DELETE FROM session WHERE id=?", [id]);
     return response.status(204).end();
 });

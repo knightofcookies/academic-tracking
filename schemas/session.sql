@@ -1,5 +1,0 @@
-CREATE TABLE session (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    start_year YEAR NOT NULL,
-    season VARCHAR(50) NOT NULL
-);
