@@ -46,7 +46,9 @@ INSERT INTO instructor (name, designation, dept_name) VALUES
 ('Emily Davis', 'Professor', 'ECE'),
 ('Michael Wilson', 'Associate Professor', 'ECE'),
 ('Sarah Miller', 'Assistant Professor', 'ECE'),
-('David Garcia', 'Professor', 'ECE');
+('David Garcia', 'Professor', 'ECE'),
+('Alexandra Lee', 'Lecturer', 'CSE'),
+('Christopher Thompson', 'Assistant Professor', 'ECE');
 
 -- student
 INSERT INTO student (roll, name, email, programme_id, year_of_joining) VALUES
