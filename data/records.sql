@@ -92,9 +92,26 @@ INSERT INTO teaches (instructor_id, course_id, session_id) VALUES
 INSERT INTO user (username, email, password_hash) VALUES
 ('user1', 'user1@iiit.ac.in', 'password1'),
 ('user2', 'user2@iiit.ac.in', 'password2'),
-('user3', 'user3@iiit.ac.in', 'password3');
+('user3', 'user3@iiit.ac.in', 'password3'),
+('user4', 'user4@iiit.ac.in', 'password4'),
+('user5', 'user5@iiit.ac.in', 'password5'),
+('user6', 'user6@iiit.ac.in', 'password6'),
+('user7', 'user7@iiit.ac.in', 'password7'),
+('user8', 'user8@iiit.ac.in', 'password8'),
+('user9', 'user9@iiit.ac.in', 'password9'),
+('user10', 'user10@iiit.ac.in', 'password10');
+
 
 -- administrator
 INSERT INTO administrator (username, email, password_hash, security_question, security_answer_hash) VALUES
 ('admin1', 'admin1@iiit.ac.in', 'admin_password1', 'What is your favorite color?', 'answer_hash1'),
-('admin2', 'admin2@iiit.ac.in', 'admin_password2', 'What is your pet\'s name?', 'answer_hash2');
+('admin2', 'admin2@iiit.ac.in', 'admin_password2', 'What is your pet\'s name?', 'answer_hash2'),
+('admin3', 'admin3@iiit.ac.in', 'admin_password3', 'What is your favorite food?', 'answer_hash3'),
+('admin4', 'admin4@iiit.ac.in', 'admin_password4', 'What is the name of your first school?', 'answer_hash4'),
+('admin5', 'admin5@iiit.ac.in', 'admin_password5', 'What city were you born in?', 'answer_hash5'),
+('admin6', 'admin6@iiit.ac.in', 'admin_password6', 'What is your favorite movie?', 'answer_hash6'),
+('admin7', 'admin7@iiit.ac.in', 'admin_password7', 'What is your mother\'s maiden name?', 'answer_hash7'),
+('admin8', 'admin8@iiit.ac.in', 'admin_password8', 'What is your favorite book?', 'answer_hash8'),
+('admin9', 'admin9@iiit.ac.in', 'admin_password9', 'What is your favorite sport?', 'answer_hash9'),
+('admin10', 'admin10@iiit.ac.in', 'admin_password10', 'What is your favorite holiday destination?', 'answer_hash10');
+
