@@ -53,6 +53,7 @@ const AddAdminPage = () => {
           .createAdmin(credentials)
           .then(() => {
             alert("Admin Created Successfully!!!");
+            event.target.reset();
           })
           .catch((error) => {
             if (error.response.data.error) {
