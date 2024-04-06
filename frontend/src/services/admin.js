@@ -24,4 +24,9 @@ const addDepartment = async (credentials) => {
   return response.data;
 }
 
-export default { setToken, createAdmin, addDepartment};
+const addSession = async (credentials) => {
+  const response = await axios.post(baseUrl + "/sessions", credentials, config);
+  return response.data;
+}
+
+export default { setToken, createAdmin, addDepartment, addSession};

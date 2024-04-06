@@ -47,6 +47,7 @@ export default function SideBar() {
   const handleAddSessionClick = (event) => {
     event.preventDefault();
     console.log("Add Session");
+    navigate('/admin/sessions');
   }
 
   return (
