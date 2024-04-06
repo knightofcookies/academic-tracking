@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -52,15 +53,15 @@ export default function AdminSignIn() {
         password,
     };
     loginService
-            .login(credentials)
+            .loginAdmin(credentials)
             .then((user) => {
                 window.localStorage.setItem(
-                    "loggedAcademicTrackingUser",
+                    "loggedAcademicTrackingAdmin",
                     JSON.stringify(user)
                 );
                 setErrorMessage("");
                 console.log("Login Successful");
-                navigate("/admin/dashboard");
+                navigate("/admin/dashboard", {replace: true});
             })
             .catch((error) => {
               if (error.response.data.error) {
@@ -82,8 +83,8 @@ export default function AdminSignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
       <ErrorMessage errorMessage={errorMessage} />
+      <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
           item

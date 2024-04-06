@@ -1,20 +1,18 @@
-import AppBar from "./components/AppBar";
-import Container from "@mui/material/Container";
-import CustomThemeProvider from "./components/CustomThemeProvider";
+import { AppBar } from "@mui/material";
+import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
+import ButtonAppBar from "./components/ButtonAppBar";
 
 function App() {
   const { user } = useLoaderData();
-
   return (
-    <CustomThemeProvider>
-      <AppBar />
-      <Container>
-        <p>Hello, {user.username}</p>
+  <>
+    <ButtonAppBar />
+    <Container>
+        <p>Hello, {user?.username}</p>
         <p>This site is under construction.</p>
-        {/* TODO Display home page text */}
-      </Container>
-    </CustomThemeProvider>
+    </Container>
+  </>
   );
 }
 

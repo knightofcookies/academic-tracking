@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import loginService from '../services/login';
+import ErrorMessage from './ErrorMessage';
 
 function Copyright(props) {
   return (
@@ -30,17 +33,57 @@ const defaultTheme = createTheme();
 
 export default function SignInSide() {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const username = data.get('username');
+    const password = data.get('password');
+    if (!username || !password) {
+      setErrorMessage("Missing username or password");
+      setTimeout(() => {
+          setErrorMessage("");
+      }, 5000);
+      return;
+    }
+    const credentials = {
+        username,
+        password,
+    };
+    loginService
+            .loginUser(credentials)
+            .then((user) => {
+                window.localStorage.setItem(
+                    "loggedAcademicTrackingUser",
+                    JSON.stringify(user)
+                );
+                setErrorMessage("");
+                navigate("/", { replace: true });
+                // navigate on success
+                // navigate("/admin/dashboard");
+            })
+            .catch((error) => {
+              if (error.response.data.error) {
+                  setErrorMessage(error.response.data.error);
+                  setTimeout(() => {
+                      setErrorMessage("");
+                  }, 5000);
+              } else {
+                  setErrorMessage(
+                      "Error logging in : Please check the console for more details"
+                  );
+                  console.error(error);
+                  setTimeout(() => {
+                      setErrorMessage("");
+                  }, 5000);
+              }
+          });
+    console.log("Sign in successful");
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <ErrorMessage errorMessage={errorMessage} />
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -78,10 +121,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
                 autoFocus
               />
               <TextField

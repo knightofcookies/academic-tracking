@@ -1,9 +1,7 @@
 import { redirect } from "react-router-dom";
 
 const getUserFromLocalStorage = () => {
-    const loggedUserJSON = window.localStorage.getItem(
-        "loggedAcademicTrackingUser"
-    );
+    const loggedUserJSON = window.localStorage.getItem("loggedAcademicTrackingUser");
     if (loggedUserJSON) {
         return JSON.parse(loggedUserJSON);
     }
@@ -12,8 +10,9 @@ const getUserFromLocalStorage = () => {
 
 const userLoader = async () => {
     const user = getUserFromLocalStorage();
+    console.log(user);
     if (!user) {
-        return redirect("/login");
+        return redirect("/signin");
     }
     return { user };
 };

@@ -1,11 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./components/ErrorPage.jsx";
-import userLoader from "./loaders/userLoader.js";
-import loginLoader from "./loaders/loginLoader.js";
-import Login from "./components/Login.jsx";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import userLoader from './loaders/userLoader';
+import userLoginLoader from './loaders/userLoginLoader';
+import adminLoader from './loaders/adminLoader';
+import adminLoginLoader from './loaders/adminLoginLoader';
+import ErrorPage from './components/ErrorPage.jsx';
+import AdminSignIn from './components/AdminSignIn.jsx';
+import SignInSide from './components/SignInSide.jsx';
+import SignUpSide from './components/SignUpSide.jsx';
+import AdminDashBoard from './components/AdminDashBoard.jsx';
+import AddAdminPage from './components/AddAdminPage.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -15,15 +23,40 @@ const router = createBrowserRouter([
     loader: userLoader,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/signin",
+    element: <SignInSide />,
     errorElement: <ErrorPage />,
-    loader: loginLoader,
+    loader: userLoginLoader,
   },
-]);
+  {
+    path: "/signup",
+    element: <SignUpSide />,
+    errorElement: <ErrorPage />,
+    loader: userLoginLoader,
+  },
+  {
+    path: "/admin/signin",
+    element: <AdminSignIn />,
+    errorElement: <ErrorPage />,
+    loader: adminLoginLoader,
+  },
+  {
+    path: "/admin/dashboard",
+    element: <AdminDashBoard />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
+    path: "/admin/add_admin",
+    element: <AddAdminPage />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  }
+])
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
-);
+  </React.StrictMode>,
+)

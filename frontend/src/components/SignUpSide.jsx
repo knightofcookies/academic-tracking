@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import signupServices from '../services/signup';
+import ErrorMessage from './ErrorMessage';
 
 function Copyright(props) {
   return (
@@ -30,9 +33,47 @@ const defaultTheme = createTheme();
 
 export default function SignUpSide() {
   const navigate= useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const username = data.get('username');
+    const email = data.get('email');
+    const password = data.get('password');
+    if (!username || !password || !email) {
+      setErrorMessage("Missing username or password or email");
+      setTimeout(() => {
+          setErrorMessage("");
+      }, 5000);
+      return;
+    }
+    const credentials = {
+      username,
+      email,
+      password
+    }
+    signupServices
+          .signupUser(credentials)
+          .then((user) => {
+            console.log("Sign Up Successfull");
+            navigate("/signin", {replace: true});
+          })
+          .catch((error) => {
+            if (error.response.data.error) {
+                setErrorMessage(error.response.data.error);
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 5000);
+            } else {
+                setErrorMessage(
+                    "Error logging in : Please check the console for more details"
+                );
+                console.error(error);
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 5000);
+            }
+        });
     console.log({
       username: data.get('username'),
       email: data.get('email'),
@@ -42,6 +83,7 @@ export default function SignUpSide() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <ErrorMessage errorMessage={errorMessage} />
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
