@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3653/api/admin";
+const baseUrl = "http://localhost:3653/api";
 
 let token  = null;
 let config = null;
@@ -15,8 +15,13 @@ const setToken = (newToken) => {
 };
 
 const createAdmin = async (credentials) => {
-    const response = await axios.post(baseUrl, credentials, config);
+    const response = await axios.post(baseUrl + "/admin", credentials, config);
     return response.data;
 }
 
-export default { setToken, createAdmin};
+const addDepartment = async (credentials) => {
+  const response = await axios.post(baseUrl + "/departments", credentials, config);
+  return response.data;
+}
+
+export default { setToken, createAdmin, addDepartment};
