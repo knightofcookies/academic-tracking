@@ -1,6 +1,7 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LockPersonIcon from '@mui/icons-material/LockPerson';
+import PersonIcon from '@mui/icons-material/Person';
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -21,6 +22,12 @@ export default function SideBar() {
     event.preventDefault();
     console.log("Add Admin");
     navigate('/admin/add_admin');
+  }
+
+  const handleAddUserClick = (event) => {
+    event.preventDefault();
+    console.log("Add User");
+    navigate('/admin/add_user')
   }
 
   const handleAddInstructorClick = (event) => {
@@ -58,6 +65,7 @@ export default function SideBar() {
         </MenuItem>
         <MenuItem icon={<HomeOutlinedIcon />} onClick={handleHomeClick}>Home</MenuItem>
         <MenuItem icon={<LockPersonIcon />} onClick={handleAddAdminClick}>Add Admin</MenuItem>
+        <MenuItem icon={<PersonIcon />} onClick={handleAddUserClick}>Add User</MenuItem>
         <MenuItem icon={<PeopleOutlinedIcon />} onClick={handleAddInstructorClick}>Add Instructor</MenuItem>
         <MenuItem icon={<PeopleOutlinedIcon />} onClick={handleAddStudentClick}>Add Student</MenuItem>
         <MenuItem icon={<ApartmentIcon />} onClick={handleAddDepartmentClick}>Add Department</MenuItem>

@@ -19,6 +19,11 @@ const createAdmin = async (credentials) => {
     return response.data;
 }
 
+const createUser = async (credentials) => {
+    const response = await axios.post(baseUrl + "/users", credentials, config);
+    return response.data;
+}
+
 const addDepartment = async (credentials) => {
   const response = await axios.post(baseUrl + "/departments", credentials, config);
   return response.data;
@@ -29,4 +34,4 @@ const addSession = async (credentials) => {
   return response.data;
 }
 
-export default { setToken, createAdmin, addDepartment, addSession};
+export default { setToken, createAdmin, createUser, addDepartment, addSession};

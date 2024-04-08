@@ -79,6 +79,8 @@ const AddSession = () => {
   }
 
   return (
+    <div>
+      <ErrorMessage errorMessage={errorMessage} />
     <Box display="flex">
       <SideBar />
       <Box flexGrow={1}>
@@ -116,6 +118,7 @@ const AddSession = () => {
         </div>
       </Box>
     </Box>
+    </div>
   );
 };
 

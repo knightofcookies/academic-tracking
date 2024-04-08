@@ -14,7 +14,7 @@ const securityQuestions = [
   'In which city were you born?'
 ];
 
-const AddAdminPage = () => {
+const SideBar = () => {
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
   const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin"));
@@ -72,8 +72,6 @@ const AddAdminPage = () => {
   }
 
   return (
-    <div>
-      <ErrorMessage errorMessage={errorMessage} />
     <Box display="flex">
       <SideBar />
       <Box flexGrow={1}>
@@ -114,8 +112,7 @@ const AddAdminPage = () => {
         </div>
       </Box>
     </Box>
-    </div>
   );
 };
 
-export default AddAdminPage;
+export default SideBar;
