@@ -25,30 +25,30 @@ INSERT INTO department (name) VALUES
 ('BIO');
 
 -- programme
-INSERT INTO programme (dept_name, degree, name) VALUES
-('CSE', 'B.Tech.', 'Computer Science and Engineering'),
-('CSE', 'M.Tech.', 'Computer Science and Engineering'),
-('CSE', 'Ph.D.', 'Computer Science and Engineering'),
-('ECE', 'B.Tech.', 'Electronics and Communication Engineering'),
-('ECE', 'M.Tech.', 'Electronics and Communication Engineering'),
-('ECE', 'Ph.D.', 'Electronics and Communication Engineering'),
-('ME', 'B.Tech.', 'Mechanical Engineering'),
-('CE', 'B.Tech.', 'Civil Engineering'),
-('EE', 'B.Tech.', 'Electrical Engineering'),
-('CHE', 'B.Tech.', 'Chemical Engineering');
+INSERT INTO programme (department_id, degree, name) VALUES
+(1, 'B.Tech.', 'Computer Science and Engineering'),
+(1, 'M.Tech.', 'Computer Science and Engineering'),
+(1, 'Ph.D.', 'Computer Science and Engineering'),
+(2, 'B.Tech.', 'Electronics and Communication Engineering'),
+(2, 'M.Tech.', 'Electronics and Communication Engineering'),
+(2, 'Ph.D.', 'Electronics and Communication Engineering'),
+(3, 'B.Tech.', 'Mechanical Engineering'),
+(4, 'B.Tech.', 'Civil Engineering'),
+(5, 'B.Tech.', 'Electrical Engineering'),
+(6, 'B.Tech.', 'Chemical Engineering');
 
 -- instructor
-INSERT INTO instructor (name, designation, dept_name) VALUES
-('John Doe', 'Professor', 'CSE'),
-('Jane Smith', 'Assistant Professor', 'CSE'),
-('Alice Johnson', 'Associate Professor', 'CSE'),
-('Bob Brown', 'Lecturer', 'CSE'),
-('Emily Davis', 'Professor', 'ECE'),
-('Michael Wilson', 'Associate Professor', 'ECE'),
-('Sarah Miller', 'Assistant Professor', 'ECE'),
-('David Garcia', 'Professor', 'ECE'),
-('Alexandra Lee', 'Lecturer', 'CSE'),
-('Christopher Thompson', 'Assistant Professor', 'ECE');
+INSERT INTO instructor (name, designation, department_id) VALUES
+('John Doe', 'Professor', 1),
+('Jane Smith', 'Assistant Professor', 1),
+('Alice Johnson', 'Associate Professor', 1),
+('Bob Brown', 'Lecturer', 1),
+('Emily Davis', 'Professor', 2),
+('Michael Wilson', 'Associate Professor', 2),
+('Sarah Miller', 'Assistant Professor', 2),
+('David Garcia', 'Professor', 2),
+('Alexandra Lee', 'Lecturer', 1),
+('Christopher Thompson', 'Assistant Professor', 2);
 
 -- student
 INSERT INTO student (roll, name, email, programme_id, year_of_joining) VALUES
@@ -64,17 +64,17 @@ INSERT INTO student (roll, name, email, programme_id, year_of_joining) VALUES
 (2203003, 'Mia Thomas', 'mia@iiit.ac.in', 3, 2022);
 
 -- course
-INSERT INTO course (title, code, dept_name) VALUES
-('Data Structures', 'CS101', 'CSE'),
-('Digital Electronics', 'EC101', 'ECE'),
-('Algorithms', 'CS201', 'CSE'),
-('Communication Systems', 'EC201', 'ECE'),
-('Database Management', 'CS301', 'CSE'),
-('Embedded Systems', 'EC301', 'ECE'),
-('Machine Learning', 'CS401', 'CSE'),
-('VLSI Design', 'EC401', 'ECE'),
-('Computer Networks', 'CS501', 'CSE'),
-('Signal Processing', 'EC501', 'ECE');
+INSERT INTO course (title, code, department_id) VALUES
+('Data Structures', 'CS101', 1),
+('Digital Electronics', 'EC101', 2),
+('Algorithms', 'CS201', 1),
+('Communication Systems', 'EC201', 2),
+('Database Management', 'CS301', 1),
+('Embedded Systems', 'EC301', 2),
+('Machine Learning', 'CS401', 1),
+('VLSI Design', 'EC401', 2),
+('Computer Networks', 'CS501', 1),
+('Signal Processing', 'EC501', 2);
 
 -- takes
 INSERT INTO takes (student_roll, course_id, session_id, grade, semester_number, taught_by) VALUES

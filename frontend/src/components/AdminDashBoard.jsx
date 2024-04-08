@@ -4,6 +4,7 @@ import SideBar from './SideBar';
 import { CssBaseline } from '@mui/material';
 
 const AdminDashBoard = () => {
+  console.log('Homepage under construction.');
   return (
     <div>
       <CssBaseline/>

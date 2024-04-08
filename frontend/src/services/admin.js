@@ -29,9 +29,24 @@ const addDepartment = async (departmentDetails) => {
   return response.data;
 }
 
-const addSession = async (sessionDetails) => {
-  const response = await axios.post(baseUrl + "/sessions", sessionDetails, config);
+const addInstructor = async (credentials) => {
+  const response = await axios.post(baseUrl + "/instructors", credentials, config);
   return response.data;
 }
 
-export default { setToken, createAdmin, createUser, addDepartment, addSession};
+const addSession = async (credentials) => {
+  const response = await axios.post(baseUrl + "/sessions", credentials, config);
+  return response.data; 
+}
+
+const getAllDepartments = async () => {
+  const response = await axios.get(baseUrl + "/departments", config);
+  return response.data;
+}
+
+const addProgramme = async (credentials) => {
+  const response = await axios.post(baseUrl + "/programmes", credentials, config);
+  return response.data;
+}
+
+export default { setToken, createAdmin, addDepartment, addInstructor, addSession, getAllDepartments, addProgramme };

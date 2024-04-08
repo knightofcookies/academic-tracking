@@ -35,29 +35,25 @@ export default function SideBar() {
   const handleAddInstructorClick = (event) => {
     event.preventDefault();
     console.log("Add Instructor");
-    navigate('/admin/instructors')
-  }
-
-  const handleAddProgrammeClick = (event) => {
-    event.preventDefault();
-    console.log("Add Programme");
-    navigate("/admin/programmes")
+    navigate('/admin/instructors');  
   }
 
   const handleAddStudentClick = (event) => {
     event.preventDefault();
     console.log("Add Student");
+    navigate('/admin/students');
   }
 
   const handleAddDepartmentClick = (event) => {
     event.preventDefault();
     console.log("Add Department");
-    navigate('/admin/departments');
+    navigate('/admin/departments'); 
   }
 
   const handleAddCourseClick = (event) => {
     event.preventDefault();
     console.log("Add Course");
+    navigate('/admin/courses');
   }
 
   const handleAddSessionClick = (event) => {
@@ -66,6 +62,11 @@ export default function SideBar() {
     navigate('/admin/sessions');
   }
 
+  const handleAddProgrammeClick = (event) => {
+    event.preventDefault();
+    console.log("Add Programme");
+    navigate('/admin/programmes');
+    
   const handleAnalyticsClick = (event) => {
     event.preventDefault();
     console.log("Analytics");
@@ -91,5 +92,6 @@ export default function SideBar() {
       </Menu>
     </Sidebar>
   );
+}
 }
 

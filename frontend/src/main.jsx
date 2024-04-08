@@ -16,8 +16,11 @@ import AdminDashBoard from './components/AdminDashBoard.jsx';
 import AddAdminPage from './components/AddAdminPage.jsx';
 import AddDepartment from './components/AddDepartment.jsx';
 import AddSession from './components/AddSession.jsx';
-import AddUser from './components/AddUser.jsx';
+import AddInstructorPage from './components/AddInstructorPage.jsx';
 import AddProgrammePage from './components/AddProgrammePage.jsx';
+import AddStudentPage from './components/AddStudentPage.jsx';
+import AddCoursePage from './components/AddCoursePage.jsx';
+import AddUser from './components/AddUser.jsx';
 import Analytics from './components/Analytics.jsx';
 
 
@@ -65,10 +68,28 @@ const router = createBrowserRouter([
     loader: adminLoader,
   },
   {
+    path: "/admin/instructors",
+    element: <AddInstructorPage />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
+    path: "/admin/programmes",
+    element: <AddProgrammePage />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
     path: "/admin/sessions",
     element: <AddSession />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
+  },
+  {
+    path: "/admin/courses",
+    element: <AddCoursePage />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader
   },
   {
     path: "/admin/programme",
@@ -77,8 +98,8 @@ const router = createBrowserRouter([
     loader: adminLoader,
   },
   {
-    path: "/admin/add_user",
-    element: <AddUser />,
+    path: "/admin/students",
+    element: <AddStudentPage />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
   },
