@@ -8,6 +8,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SchoolIcon from '@mui/icons-material/School';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { useNavigate } from "react-router-dom";
 
 export default function SideBar() {
@@ -65,6 +66,12 @@ export default function SideBar() {
     navigate('/admin/sessions');
   }
 
+  const handleAnalyticsClick = (event) => {
+    event.preventDefault();
+    console.log("Analytics");
+    navigate('/analytics')
+  }
+
   return (
     <Sidebar style={{ height: '100vh' }}>
       <Menu>
@@ -80,6 +87,7 @@ export default function SideBar() {
         <MenuItem icon={<ApartmentIcon />} onClick={handleAddDepartmentClick}>Add Department</MenuItem>
         <MenuItem icon={<LibraryBooksIcon />} onClick={handleAddCourseClick}>Add Course</MenuItem>
         <MenuItem icon={<ReceiptOutlinedIcon />} onClick={handleAddSessionClick}>Add Session</MenuItem>
+        <MenuItem icon={<AnalyticsIcon />} onClick={handleAnalyticsClick}>Analytics</MenuItem>
       </Menu>
     </Sidebar>
   );

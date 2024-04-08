@@ -7,6 +7,7 @@ import userLoader from './loaders/userLoader';
 import userLoginLoader from './loaders/userLoginLoader';
 import adminLoader from './loaders/adminLoader';
 import adminLoginLoader from './loaders/adminLoginLoader';
+import adminUserLoader from './loaders/adminUserLoader.js';
 import ErrorPage from './components/ErrorPage.jsx';
 import AdminSignIn from './components/AdminSignIn.jsx';
 import SignInSide from './components/SignInSide.jsx';
@@ -17,6 +18,7 @@ import AddDepartment from './components/AddDepartment.jsx';
 import AddSession from './components/AddSession.jsx';
 import AddUser from './components/AddUser.jsx';
 import AddProgrammePage from './components/AddProgrammePage.jsx';
+import Analytics from './components/Analytics.jsx';
 
 
 const router = createBrowserRouter([
@@ -79,6 +81,12 @@ const router = createBrowserRouter([
     element: <AddUser />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
+  },
+  {
+    path: "/analytics",
+    element: <Analytics />,
+    errorElement: <ErrorPage />,
+    loader: adminUserLoader,
   }
 ])
 
