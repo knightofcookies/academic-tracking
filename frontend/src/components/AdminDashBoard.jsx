@@ -5,6 +5,7 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 import { CssBaseline } from '@mui/material';
 
 const AdminDashBoard = () => {
+  console.log('Homepage under construction.');
   return (
     <div>
       <CssBaseline/>

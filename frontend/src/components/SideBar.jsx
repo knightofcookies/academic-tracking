@@ -26,6 +26,7 @@ export default function SideBar() {
   const handleAddInstructorClick = (event) => {
     event.preventDefault();
     console.log("Add Instructor");
+    navigate('/admin/instructors');  ////
   }
 
   const handleAddStudentClick = (event) => {
@@ -36,7 +37,7 @@ export default function SideBar() {
   const handleAddDepartmentClick = (event) => {
     event.preventDefault();
     console.log("Add Department");
-    navigate('/admin/departments');
+    navigate('/admin/departments');  ////
   }
 
   const handleAddCourseClick = (event) => {

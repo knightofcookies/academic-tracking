@@ -1,7 +1,90 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { CssBaseline } from '@mui/material';
+import { ProSidebarProvider } from "react-pro-sidebar";
+import ResponsiveAppBar from './ResponsiveAppBar';
+import ErrorMessage from './ErrorMessage';
+import SideBar from './SideBar';
+import { Box } from '@mui/system';
+import adminServices from '../services/admin';
 
-export default function AddInstructorPage() {
+
+const AddInstructorPage = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin"));
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const instructor_name = formData.get('instructor_name');
+    console.log(instructor_name);
+    if (!instructor_name) {
+      setErrorMessage("Missing instructor name");
+      setTimeout(() => {
+          setErrorMessage("");
+      }, 5000);
+      return;
+    }
+    const credentials = {
+      name: instructor_name,
+      designation: designation,
+      department_id: department_id
+    };
+
+    adminServices.setToken(user?.token);
+    adminServices
+          .addInstructor(credentials)
+          .then(() => {
+            alert("Instructor Added Successfully!!!");
+            event.target.reset();
+          })
+          .catch((error) => {
+            if (error.response.data.error) {
+                setErrorMessage(error.response.data.error);
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 5000);
+            } else {
+                setErrorMessage(
+                    "Error logging in : Please check the console for more details"
+                );
+                console.error(error);
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 5000);
+            }
+        });
+  }
+
   return (
-    <div>AddInstructorPage</div>
-  )
-}
+    <ProSidebarProvider>
+      <ErrorMessage errorMessage={errorMessage} />
+      <Box display="flex">
+        <SideBar />
+        <Box flexGrow={1}>
+          <ResponsiveAppBar />
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundImage: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)' }}>
+            <CssBaseline />
+            <Paper style={{ padding: 24, borderRadius: 8 }}>
+              <Typography variant="h5" align="center" gutterBottom>
+                Add Instructor
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <div style={{ width: '100%' }}>
+                  <TextField label="Instructor Name" variant="outlined" fullWidth margin="normal" id='instructor_name' name='instructor_name' />
+                  <TextField label="Designation" variant="outlined" fullWidth margin="normal" id='designation' name='designation' />
+                  <TextField label="Department ID" variant="outlined" fullWidth margin="normal" id='department_id' name='department_id' />
+                  <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
+                    Add Instructor
+                  </Button>
+                </div>
+              </form>
+            </Paper>
+          </div>
+        </Box>
+      </Box>
+    </ProSidebarProvider>
+  );
+};
+
+export default AddInstructorPage;

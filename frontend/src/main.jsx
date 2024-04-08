@@ -15,6 +15,7 @@ import AdminDashBoard from './components/AdminDashBoard.jsx';
 import AddAdminPage from './components/AddAdminPage.jsx';
 import AddDepartment from './components/AddDepartment.jsx';
 import AddSession from './components/AddSession.jsx';
+import AddInstructorPage from './components/AddInstructorPage.jsx';
 
 
 const router = createBrowserRouter([
@@ -57,6 +58,12 @@ const router = createBrowserRouter([
   {
     path: "/admin/departments",
     element: <AddDepartment />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
+    path: "/admin/instructors",
+    element: <AddInstructorPage />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
   },
