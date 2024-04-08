@@ -108,6 +108,12 @@ const router = createBrowserRouter([
     element: <Analytics />,
     errorElement: <ErrorPage />,
     loader: adminUserLoader,
+  },
+  {
+    path: "/admin/add_user",
+    element: <AddUser />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader
   }
 ])
 
