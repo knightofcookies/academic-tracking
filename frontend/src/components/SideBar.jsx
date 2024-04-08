@@ -66,6 +66,7 @@ export default function SideBar() {
     event.preventDefault();
     console.log("Add Programme");
     navigate('/admin/programmes');
+  }
     
   const handleAnalyticsClick = (event) => {
     event.preventDefault();
@@ -93,5 +94,5 @@ export default function SideBar() {
     </Sidebar>
   );
 }
-}
+
 
