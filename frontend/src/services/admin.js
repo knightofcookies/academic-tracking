@@ -54,4 +54,15 @@ const addCourse = async (credentials) => {
   return response.data;
 }
 
-export default { setToken, createAdmin, addDepartment, addInstructor, addSession, getAllDepartments, addProgramme, addCourse };
+const getAllProgrammes = async () => {
+  const response = await axios.get(baseUrl + "/programmes", config);
+  return response.data;
+}
+
+const addStudent = async (credentials) => {
+  const response = await axios.post(baseUrl + "/students", credentials, config);
+  return response.data;
+}
+
+export default { setToken, createAdmin, addDepartment, addInstructor, addSession, 
+          getAllDepartments, addProgramme, addCourse, getAllProgrammes, addStudent };

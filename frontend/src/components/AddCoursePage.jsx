@@ -65,7 +65,7 @@ const AddCoursePage = () => {
           }, 5000);
         } else {
           setErrorMessage(
-            "Error adding instructor. Please check the console for more details"
+            "Error adding course. Please check the console for more details"
           );
           console.error("Error adding course:", error);
           setTimeout(() => {
