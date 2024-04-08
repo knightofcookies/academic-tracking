@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { CssBaseline } from '@mui/material';
-import { ProSidebarProvider } from "react-pro-sidebar";
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
 import SideBar from './SideBar';
 import { Box } from '@mui/system';
 import adminServices from '../services/admin';
-import { useLoaderData } from 'react-router-dom';
 
 const securityQuestions = [
   'What was the name of your first pet?',
@@ -74,49 +72,46 @@ const AddAdminPage = () => {
   }
 
   return (
-    <ProSidebarProvider>
-      <ErrorMessage errorMessage={errorMessage} />
-      <Box display="flex">
-        <SideBar />
-        <Box flexGrow={1}>
-          <ResponsiveAppBar />
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundImage: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)' }}>
-            <CssBaseline />
-            <Paper style={{ padding: 24, borderRadius: 8 }}>
-              <Typography variant="h5" align="center" gutterBottom>
-                Create Admin
-              </Typography>
-              <form onSubmit={handleSubmit}>
-                <div style={{ width: '100%' }}>
-                  <TextField label="Username" variant="outlined" fullWidth margin="normal" id='username' name='username' />
-                  <TextField label="Email" variant="outlined" fullWidth margin="normal" type="email" id='email' name='email' />
-                  <TextField label="Password" variant="outlined" fullWidth margin="normal" type="password" id='password' name='password' />
-                  <FormControl style={{ marginTop: 16, minWidth: 120 }} fullWidth>
-                    <InputLabel id="security-question-label">Security Question</InputLabel>
-                    <Select
-                      labelId="security-question-label"
-                      value={securityQuestion}
-                      onChange={handleSecurityQuestionChange}
-                      label="Security Question"
-                    >
-                      {securityQuestions.map((question) => (
-                        <MenuItem key={question} value={question}>
-                          {question}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <TextField label="Security Answer" variant="outlined" fullWidth margin="normal" id='security_answer' name='security_answer' />
-                  <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
-                    Create
-                  </Button>
-                </div>
-              </form>
-            </Paper>
-          </div>
-        </Box>
+    <Box display="flex">
+      <SideBar />
+      <Box flexGrow={1}>
+        <ResponsiveAppBar />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundImage: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)' }}>
+          <CssBaseline />
+          <Paper style={{ padding: 24, borderRadius: 8 }}>
+            <Typography variant="h5" align="center" gutterBottom>
+              Create Admin
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <div style={{ width: '100%' }}>
+                <TextField label="Username" variant="outlined" fullWidth margin="normal" id='username' name='username' />
+                <TextField label="Email" variant="outlined" fullWidth margin="normal" type="email" id='email' name='email' />
+                <TextField label="Password" variant="outlined" fullWidth margin="normal" type="password" id='password' name='password' />
+                <FormControl style={{ marginTop: 16, minWidth: 120 }} fullWidth>
+                  <InputLabel id="security-question-label">Security Question</InputLabel>
+                  <Select
+                    labelId="security-question-label"
+                    value={securityQuestion}
+                    onChange={handleSecurityQuestionChange}
+                    label="Security Question"
+                  >
+                    {securityQuestions.map((question) => (
+                      <MenuItem key={question} value={question}>
+                        {question}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <TextField label="Security Answer" variant="outlined" fullWidth margin="normal" id='security_answer' name='security_answer' />
+                <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
+                  Create
+                </Button>
+              </div>
+            </form>
+          </Paper>
+        </div>
       </Box>
-    </ProSidebarProvider>
+    </Box>
   );
 };
 
