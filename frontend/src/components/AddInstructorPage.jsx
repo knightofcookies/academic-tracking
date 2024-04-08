@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { CssBaseline } from '@mui/material';
-import { ProSidebarProvider } from "react-pro-sidebar";
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
 import SideBar from './SideBar';
@@ -77,7 +76,7 @@ const AddInstructorPage = () => {
   }
 
   return (
-    <ProSidebarProvider>
+    <div>
       <ErrorMessage errorMessage={errorMessage} />
       <Box display="flex">
         <SideBar />
@@ -115,7 +114,7 @@ const AddInstructorPage = () => {
           </div>
         </Box>
       </Box>
-    </ProSidebarProvider>
+    </div>
   );
 };
 
