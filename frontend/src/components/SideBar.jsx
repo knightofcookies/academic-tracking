@@ -33,6 +33,7 @@ export default function SideBar() {
   const handleAddStudentClick = (event) => {
     event.preventDefault();
     console.log("Add Student");
+    navigate('/admin/students');
   }
 
   const handleAddDepartmentClick = (event) => {
