@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Typography, TextField, Button, Paper } from '@mui/material';
 import { CssBaseline } from '@mui/material';
-import { ProSidebarProvider } from "react-pro-sidebar";
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
 import SideBar from './SideBar';
@@ -54,31 +53,28 @@ const AddDepartment = () => {
   }
 
   return (
-    <ProSidebarProvider>
-      <ErrorMessage errorMessage={errorMessage} />
-      <Box display="flex">
-        <SideBar />
-        <Box flexGrow={1}>
-          <ResponsiveAppBar />
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundImage: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)' }}>
-            <CssBaseline />
-            <Paper style={{ padding: 24, borderRadius: 8 }}>
-              <Typography variant="h5" align="center" gutterBottom>
-                Add Department
-              </Typography>
-              <form onSubmit={handleSubmit}>
-                <div style={{ width: '100%' }}>
-                  <TextField label="Department Name" variant="outlined" fullWidth margin="normal" id='department_name' name='department_name' />
-                  <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
-                    Add Department
-                  </Button>
-                </div>
-              </form>
-            </Paper>
-          </div>
-        </Box>
+    <Box display="flex">
+      <SideBar />
+      <Box flexGrow={1}>
+        <ResponsiveAppBar />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundImage: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)' }}>
+          <CssBaseline />
+          <Paper style={{ padding: 24, borderRadius: 8 }}>
+            <Typography variant="h5" align="center" gutterBottom>
+              Add Department
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <div style={{ width: '100%' }}>
+                <TextField label="Department Name" variant="outlined" fullWidth margin="normal" id='department_name' name='department_name' />
+                <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
+                  Add Department
+                </Button>
+              </div>
+            </form>
+          </Paper>
+        </div>
       </Box>
-    </ProSidebarProvider>
+    </Box>
   );
 };
 

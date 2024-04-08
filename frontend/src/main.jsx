@@ -7,6 +7,7 @@ import userLoader from './loaders/userLoader';
 import userLoginLoader from './loaders/userLoginLoader';
 import adminLoader from './loaders/adminLoader';
 import adminLoginLoader from './loaders/adminLoginLoader';
+import adminUserLoader from './loaders/adminUserLoader.js';
 import ErrorPage from './components/ErrorPage.jsx';
 import AdminSignIn from './components/AdminSignIn.jsx';
 import SignInSide from './components/SignInSide.jsx';
@@ -19,6 +20,8 @@ import AddInstructorPage from './components/AddInstructorPage.jsx';
 import AddProgrammePage from './components/AddProgrammePage.jsx';
 import AddStudentPage from './components/AddStudentPage.jsx';
 import AddCoursePage from './components/AddCoursePage.jsx';
+import AddUser from './components/AddUser.jsx';
+import Analytics from './components/Analytics.jsx';
 
 
 const router = createBrowserRouter([
@@ -86,6 +89,12 @@ const router = createBrowserRouter([
     path: "/admin/courses",
     element: <AddCoursePage />,
     errorElement: <ErrorPage />,
+    loader: adminLoader
+  },
+  {
+    path: "/admin/programme",
+    element: <AddProgrammePage />,
+    errorElement: <ErrorPage />,
     loader: adminLoader,
   },
   {
@@ -93,6 +102,12 @@ const router = createBrowserRouter([
     element: <AddStudentPage />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
+  },
+  {
+    path: "/analytics",
+    element: <Analytics />,
+    errorElement: <ErrorPage />,
+    loader: adminUserLoader,
   }
 ])
 
