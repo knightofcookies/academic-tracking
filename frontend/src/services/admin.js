@@ -24,13 +24,13 @@ const createUser = async (credentials) => {
     return response.data;
 }
 
-const addDepartment = async (credentials) => {
-  const response = await axios.post(baseUrl + "/departments", credentials, config);
+const addDepartment = async (departmentDetails) => {
+  const response = await axios.post(baseUrl + "/departments", departmentDetails, config);
   return response.data;
 }
 
-const addSession = async (credentials) => {
-  const response = await axios.post(baseUrl + "/sessions", credentials, config);
+const addSession = async (sessionDetails) => {
+  const response = await axios.post(baseUrl + "/sessions", sessionDetails, config);
   return response.data;
 }
 
