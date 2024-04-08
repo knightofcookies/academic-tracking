@@ -16,6 +16,9 @@ import AddAdminPage from './components/AddAdminPage.jsx';
 import AddDepartment from './components/AddDepartment.jsx';
 import AddSession from './components/AddSession.jsx';
 import AddInstructorPage from './components/AddInstructorPage.jsx';
+import AddProgrammePage from './components/AddProgrammePage.jsx';
+import AddStudentPage from './components/AddProgrammePage.jsx';
+import AddCoursePage from './components/AddProgrammePage.jsx';
 
 
 const router = createBrowserRouter([
@@ -68,8 +71,20 @@ const router = createBrowserRouter([
     loader: adminLoader,
   },
   {
+    path: "/admin/programmes",
+    element: <AddProgrammePage />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
     path: "/admin/sessions",
     element: <AddSession />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
+    path: "/admin/courses",
+    element: <AddCoursePage />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
   }

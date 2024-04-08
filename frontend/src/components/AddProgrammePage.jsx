@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { CssBaseline } from '@mui/material';
 import { ProSidebarProvider } from "react-pro-sidebar";
@@ -8,7 +9,7 @@ import SideBar from './SideBar';
 import { Box } from '@mui/system';
 import adminServices from '../services/admin';
 
-const AddInstructorPage = () => {
+const AddProgrammePage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [departments, setDepartments] = useState([]); // State to store department names
   const [selectedDepartment, setSelectedDepartment] = useState(""); // State to store selected department name
@@ -16,7 +17,7 @@ const AddInstructorPage = () => {
 
   useEffect(() => {
     // Fetch department names when component mounts
-    adminServices.setToken(user.token)
+    adminServices.setToken(user.token);
     adminServices.getAllDepartments()
       .then(data => {
         setDepartments(data);
@@ -28,9 +29,9 @@ const AddInstructorPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const instructorName = formData.get('instructor_name');
-    const designation = formData.get('designation');
-    if (!instructorName || !designation || !selectedDepartment) {
+    const degree = formData.get('degree');
+    const name = formData.get('name');
+    if (!selectedDepartment || !degree || !name) {
       setErrorMessage("Missing required fields");
       setTimeout(() => {
         setErrorMessage("");
@@ -46,16 +47,16 @@ const AddInstructorPage = () => {
       return;
     }
     const credentials = {
-      name: instructorName,
-      designation: designation,
-      department_id: departmentId
+      department_id: departmentId,
+      degree: degree,
+      name: name
     };
 
     adminServices.setToken(user?.token);
     adminServices
-      .addInstructor(credentials)
+      .addProgramme(credentials)
       .then(() => {
-        alert("Instructor Added Successfully!!!");
+        alert("Programme Added Successfully!!!");
         event.target.reset();
       })
       .catch((error) => {
@@ -68,7 +69,7 @@ const AddInstructorPage = () => {
           setErrorMessage(
             "Error adding instructor. Please check the console for more details"
           );
-          console.error("Error adding instructor:", error);
+          console.error("Error adding programme:", error);
           setTimeout(() => {
             setErrorMessage("");
           }, 5000);
@@ -87,12 +88,10 @@ const AddInstructorPage = () => {
             <CssBaseline />
             <Paper style={{ padding: 24, borderRadius: 8 }}>
               <Typography variant="h5" align="center" gutterBottom>
-                Add Instructor
+                Add Programme
               </Typography>
               <form onSubmit={handleSubmit}>
                 <div style={{ width: '100%' }}>
-                  <TextField label="Instructor Name" variant="outlined" fullWidth margin="normal" id='instructor_name' name='instructor_name' />
-                  <TextField label="Designation" variant="outlined" fullWidth margin="normal" id='designation' name='designation' />
                   <FormControl fullWidth margin="normal">
                     <InputLabel id="department-label">Department</InputLabel>
                     <Select
@@ -106,8 +105,10 @@ const AddInstructorPage = () => {
                       ))}
                     </Select>
                   </FormControl>
+                  <TextField label="Degree" variant="outlined" fullWidth margin="normal" id='degree' name='degree' />
+                  <TextField label="Branch Name" variant="outlined" fullWidth margin="normal" id='name' name='name' />
                   <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
-                    Add Instructor
+                    Add Programme
                   </Button>
                 </div>
               </form>
@@ -117,6 +118,11 @@ const AddInstructorPage = () => {
       </Box>
     </ProSidebarProvider>
   );
+
+  
 };
 
-export default AddInstructorPage;
+export default AddProgrammePage;
+
+
+
