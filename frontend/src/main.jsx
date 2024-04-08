@@ -17,6 +17,7 @@ import AddAdminPage from './components/AddAdminPage.jsx';
 import AddDepartment from './components/AddDepartment.jsx';
 import AddSession from './components/AddSession.jsx';
 import AddUser from './components/AddUser.jsx';
+import AddProgrammePage from './components/AddProgrammePage.jsx';
 import Analytics from './components/Analytics.jsx';
 
 
@@ -66,6 +67,12 @@ const router = createBrowserRouter([
   {
     path: "/admin/sessions",
     element: <AddSession />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader,
+  },
+  {
+    path: "/admin/programme",
+    element: <AddProgrammePage />,
     errorElement: <ErrorPage />,
     loader: adminLoader,
   },

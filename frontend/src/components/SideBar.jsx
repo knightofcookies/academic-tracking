@@ -7,6 +7,7 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import SchoolIcon from '@mui/icons-material/School';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { useNavigate } from "react-router-dom";
 
@@ -34,6 +35,13 @@ export default function SideBar() {
   const handleAddInstructorClick = (event) => {
     event.preventDefault();
     console.log("Add Instructor");
+    navigate('/admin/instructors')
+  }
+
+  const handleAddProgrammeClick = (event) => {
+    event.preventDefault();
+    console.log("Add Programme");
+    navigate("/admin/programmes")
   }
 
   const handleAddStudentClick = (event) => {
@@ -74,6 +82,7 @@ export default function SideBar() {
         <MenuItem icon={<LockPersonIcon />} onClick={handleAddAdminClick}>Add Admin</MenuItem>
         <MenuItem icon={<PersonIcon />} onClick={handleAddUserClick}>Add User</MenuItem>
         <MenuItem icon={<PeopleOutlinedIcon />} onClick={handleAddInstructorClick}>Add Instructor</MenuItem>
+        <MenuItem icon={<SchoolIcon />} onClick={handleAddProgrammeClick}>Add Programme</MenuItem>
         <MenuItem icon={<PeopleOutlinedIcon />} onClick={handleAddStudentClick}>Add Student</MenuItem>
         <MenuItem icon={<ApartmentIcon />} onClick={handleAddDepartmentClick}>Add Department</MenuItem>
         <MenuItem icon={<LibraryBooksIcon />} onClick={handleAddCourseClick}>Add Course</MenuItem>
@@ -83,3 +92,4 @@ export default function SideBar() {
     </Sidebar>
   );
 }
+
