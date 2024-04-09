@@ -181,7 +181,7 @@ const AddStudentPage = () => {
       return;
     }
     
-    const programmeId = programmes.find(prog => (prog.degree == selectedDegree && 
+    const programmeId = programmes.find(prog => (prog.degree === selectedDegree && 
                                         prog.name === selectedProgramme))?.id;
     if (!programmeId) {
       setErrorMessage("Invalid combination of degree and name selected!");
@@ -195,10 +195,11 @@ const AddStudentPage = () => {
       roll: roll,
       name: name,
       email: email,
-      programme_id: programmeId,
+      programme_id: programmeId.toString(),
       year_of_joining: year_of_joining
     };
 
+    console.log(credentials);
     adminServices.setToken(user?.token);
     adminServices
       .addStudent(credentials)
