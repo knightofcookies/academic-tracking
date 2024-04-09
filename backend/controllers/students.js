@@ -9,6 +9,11 @@ studentsRouter.get("/", async (request, response) => {
     return response.json(students);
 });
 
+studentsRouter.get("/count", async (request, response) => {
+    const studentsCount = await dbConn.query('SELECT COUNT(*) as count FROM student');
+    return response.json(studentsCount[0].count);
+});
+
 // TODO Implement the VARCHAR upper limit on the backend
 // TODO Prevent SQL Injection
 

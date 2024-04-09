@@ -8,6 +8,11 @@ coursesRouter.get("/", async (request, response) => {
     return response.json(courses);
 });
 
+coursesRouter.get("/count", async (request, response) => {
+    const courseCount = await dbConn.query('SELECT COUNT(*) as count FROM course');
+    return response.json(courseCount[0].count);
+});
+
 coursesRouter.get("/:id", async (request, response) => {
     const { id } = request.params;
 

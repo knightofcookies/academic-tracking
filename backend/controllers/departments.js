@@ -12,6 +12,11 @@ departmentsRouter.get("/", async (request, response) => {
     return response.json(departments);
 });
 
+departmentsRouter.get("/count", async (request, response) => {
+    const departmentCount = await dbConn.query('SELECT COUNT(*) as count FROM department');
+    return response.json(departmentCount[0].count);
+});
+
 departmentsRouter.post("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();

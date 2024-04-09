@@ -1,9 +1,8 @@
 import React from 'react'
+import CardAnalytics from './CardAnalytics'
 
-function Analytics() {
+export default function Analytics() {
   return (
-    <div>Analytics</div>
+    <CardAnalytics />
   )
 }
-
-export default Analytics

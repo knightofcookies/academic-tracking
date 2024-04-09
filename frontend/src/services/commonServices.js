@@ -19,4 +19,8 @@ const changeAdminPassword = async (credentials) => {
     return response.data;
 }
 
+const fetchStudents = async () => {
+  
+}
+
 export default {changeAdminPassword, setToken};

@@ -8,6 +8,11 @@ instructorsRouter.get("/", async (request, response) => {
     return response.json(instructors);
 });
 
+instructorsRouter.get("/count", async (request, response) => {
+    const instructorCount = await dbConn.query('SELECT COUNT(*) as count FROM instructor');
+    return response.json(instructorCount[0].count);
+});
+
 instructorsRouter.get("/:id", async (request, response) => {
     const { id } = request.params;
 

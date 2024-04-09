@@ -8,6 +8,11 @@ sessionsRouter.get("/", async (request, response) => {
     return response.json(sessions);
 });
 
+sessionsRouter.get("/count", async (request, response) => {
+    const sessionCount = await dbConn.query('SELECT COUNT(*) as count FROM session');
+    return response.json(sessionCount[0].count);
+});
+
 sessionsRouter.get("/:session_id", async (req, res) => {
     let { session_id } = request.params;
 

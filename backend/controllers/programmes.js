@@ -8,6 +8,11 @@ programmesRouter.get("/", async (request, response) => {
     return response.json(programmes);
 });
 
+programmesRouter.get("/count", async (request, response) => {
+    const programmeCount = await dbConn.query('SELECT COUNT(*) as count FROM programme');
+    return response.json(programmeCount[0].count);
+});
+
 programmesRouter.post("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
