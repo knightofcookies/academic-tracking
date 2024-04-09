@@ -19,8 +19,9 @@ const changeAdminPassword = async (credentials) => {
     return response.data;
 }
 
-const fetchStudents = async () => {
-  
+const getDepartmentCount = async () => {
+  const response = await axios.get(baseUrl + "/departments/count", config);
+  return response.data;
 }
 
-export default {changeAdminPassword, setToken};
+export default {changeAdminPassword, setToken, getDepartmentCount};
