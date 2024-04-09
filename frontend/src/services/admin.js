@@ -65,4 +65,4 @@ const addStudent = async (credentials) => {
 }
 
 export default { setToken, createAdmin, addDepartment, addInstructor, addSession, 
-          getAllDepartments, addProgramme, addCourse, getAllProgrammes, addStudent };
+          getAllDepartments, addProgramme, addCourse, getAllProgrammes, addStudent, createUser };

@@ -21,6 +21,8 @@ import AddProgrammePage from './components/AddProgrammePage.jsx';
 import AddStudentPage from './components/AddStudentPage.jsx';
 import AddCoursePage from './components/AddCoursePage.jsx';
 import AddUser from './components/AddUser.jsx';
+import AddTeachesPage from './components/AddTeachesPage.jsx';
+import AddTakesPage from './components/AddTakesPage.jsx';
 import Analytics from './components/Analytics.jsx';
 
 
@@ -112,6 +114,18 @@ const router = createBrowserRouter([
   {
     path: "/admin/add_user",
     element: <AddUser />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader
+  },
+  {
+    path: "/admin/teaches",
+    element: <AddTeachesPage />,
+    errorElement: <ErrorPage />,
+    loader: adminLoader
+  },
+  {
+    path: "/admin/takes",
+    element: <AddTakesPage />,
     errorElement: <ErrorPage />,
     loader: adminLoader
   }
