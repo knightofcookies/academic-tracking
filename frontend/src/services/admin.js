@@ -1,68 +1,110 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3653/api";
+const baseUrl = "http://localhost:3653/api/";
 
-let token  = null;
+let token = null;
 let config = null;
 
 const setToken = (newToken) => {
     token = `Bearer ${newToken}`;
     config = {
-      headers: {
-        Authorization: token,
-      },
+        headers: {
+            Authorization: token,
+        },
     };
 };
 
-const createAdmin = async (credentials) => {
-    const response = await axios.post(baseUrl + "/admin", credentials, config);
-    return response.data;
-}
+const handleJWTExpiry = () => {
+    localStorage.removeItem("loggedAcademicTrackingAdmin");
+    window.location.reload();
+};
 
-const createUser = async (credentials) => {
-    const response = await axios.post(baseUrl + "/users", credentials, config);
-    return response.data;
-}
+const axiosPOST = async (endpoint, data) => {
+    try {
+        const response = await axios.post(baseUrl + endpoint, data, config);
+        return response.data;
+    } catch (error) {
+        if (error.response.status == 401) {
+            handleJWTExpiry();
+        } else {
+            throw Error(error.response.data.error);
+        }
+    }
+};
 
-const addDepartment = async (departmentDetails) => {
-  const response = await axios.post(baseUrl + "/departments", departmentDetails, config);
-  return response.data;
-}
+const axiosGET = async (endpoint) => {
+    try {
+        const response = await axios.get(baseUrl + endpoint, config);
+        return response.data;
+    } catch (error) {
+        if (error.response.status == 401) {
+            handleJWTExpiry();
+        } else {
+            throw Error(error.response.data.error);
+        }
+    }
+};
 
-const addInstructor = async (credentials) => {
-  const response = await axios.post(baseUrl + "/instructors", credentials, config);
-  return response.data;
-}
+const createAdmin = async (data) => {
+    return axiosPOST("admin", data);
+};
 
-const addSession = async (credentials) => {
-  const response = await axios.post(baseUrl + "/sessions", credentials, config);
-  return response.data; 
-}
+const createUser = async (data) => {
+    return axiosPOST("users", data);
+};
+
+const addDepartment = async (data) => {
+    return axiosPOST("departments", data);
+};
+
+const addInstructor = async (data) => {
+    return axiosPOST("instructors", data);
+};
+
+const addSession = async (data) => {
+    return axiosPOST("sessions", data);
+};
 
 const getAllDepartments = async () => {
-  const response = await axios.get(baseUrl + "/departments", config);
-  return response.data;
-}
+    return axiosGET("departments");
+};
 
-const addProgramme = async (credentials) => {
-  const response = await axios.post(baseUrl + "/programmes", credentials, config);
-  return response.data;
-}
+const addProgramme = async (data) => {
+    return axiosPOST("programmes", data);
+};
 
-const addCourse = async (credentials) => {
-  const response = await axios.post(baseUrl + "/courses", credentials, config);
-  return response.data;
-}
+const addCourse = async (data) => {
+    return axiosPOST("courses", data);
+};
 
 const getAllProgrammes = async () => {
-  const response = await axios.get(baseUrl + "/programmes", config);
-  return response.data;
-}
+    return axiosGET("programmes");
+};
 
-const addStudent = async (credentials) => {
-  const response = await axios.post(baseUrl + "/students", credentials, config);
-  return response.data;
-}
+const addStudent = async (data) => {
+    return axiosPOST("students", data);
+};
 
-export default { setToken, createAdmin, addDepartment, addInstructor, addSession, 
-          getAllDepartments, addProgramme, addCourse, getAllProgrammes, addStudent, createUser };
+const changeAdminPassword = async (data) => {
+    return axiosPOST("admin/changepassword", data, config);
+};
+
+const getDepartmentCount = async () => {
+    return axiosGET("departments/count", config);
+};
+
+export default {
+    setToken,
+    createAdmin,
+    addDepartment,
+    addInstructor,
+    addSession,
+    getAllDepartments,
+    addProgramme,
+    addCourse,
+    getAllProgrammes,
+    addStudent,
+    createUser,
+    changeAdminPassword,
+    getDepartmentCount,
+};
