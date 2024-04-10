@@ -92,6 +92,30 @@ const changeAdminPassword = async (data) => {
 const getDepartmentCount = async () => {
     return axiosGET("departments/count", config);
 };
+const addStudent = async (credentials) => {
+  const response = await axios.post(baseUrl + "/students", credentials, config);
+  return response.data;
+}
+
+const getAllCourses = async () => {
+  const response = await axios.get(baseUrl + "/courses", config);
+  return response.data;
+}
+
+const getAllInstructors = async () => {
+  const response = await axios.get(baseUrl + "/instructors", config);
+  return response.data;
+}
+
+const getAllSessions = async () => {
+  const response = await axios.get(baseUrl + "/sessions", config);
+  return response.data;
+}
+
+const addTeaches = async (id, credentials) => {
+  const response = await axios.post(baseUrl + `/instructors/${id}/teaches`, credentials, config);
+  return response.data;
+}
 
 export default {
     setToken,
@@ -108,3 +132,6 @@ export default {
     changeAdminPassword,
     getDepartmentCount,
 };
+export default { setToken, createAdmin, addDepartment, addInstructor, addSession, 
+          getAllDepartments, addProgramme, addCourse, getAllProgrammes, addStudent, createUser, getAllCourses, 
+          getAllInstructors, getAllSessions, addTeaches };

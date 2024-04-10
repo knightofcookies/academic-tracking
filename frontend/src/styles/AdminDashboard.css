@@ -1,0 +1,8 @@
+.parent{
+    display: flex;
+}
+
+.analytics-child {
+    margin-left: 70px;
+    margin-top: 40px;
+}
