@@ -106,7 +106,7 @@ const getAllSessions = async () => {
 };
 
 const addTeaches = async (id, data) => {
-    return axiosPOST(`/instructors/${id}/teaches`, data);
+    return axiosPOST(`instructors/${id}/teaches`, data);
 };
 
 const getInstructorCount = async () => {

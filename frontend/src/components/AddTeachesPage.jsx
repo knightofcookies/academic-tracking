@@ -119,11 +119,12 @@ const AddTeachesPage = () => {
 
     return (
         <div>
+            <CssBaseline />
+            <ResponsiveAppBar />
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
                 <SideBar />
                 <Box flexGrow={1}>
-                    <ResponsiveAppBar />
                     <div
                         style={{
                             display: "flex",
@@ -141,7 +142,7 @@ const AddTeachesPage = () => {
                                 align="center"
                                 gutterBottom
                             >
-                                Create Admin
+                                Add Data
                             </Typography>
                             <form onSubmit={handleSubmit}>
                                 <div style={{ width: "100%" }}>
@@ -237,7 +238,7 @@ const AddTeachesPage = () => {
                                         fullWidth
                                         type="submit"
                                     >
-                                        Create
+                                        Add Data
                                     </Button>
                                 </div>
                             </form>

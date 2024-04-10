@@ -69,11 +69,12 @@ const AddUser = () => {
 
     return (
         <div>
+            <CssBaseline />
+            <ResponsiveAppBar />
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
                 <SideBar />
                 <Box flexGrow={1}>
-                    <ResponsiveAppBar />
                     <div
                         style={{
                             display: "flex",

@@ -77,6 +77,7 @@ const AddAdminPage = () => {
             .then(() => {
                 alert("Admin Created Successfully!!!");
                 event.target.reset();
+                setSecurityQuestion("");
             })
             .catch((error) => {
                 if (error.message) {
@@ -98,11 +99,12 @@ const AddAdminPage = () => {
 
     return (
         <div>
+            <CssBaseline />
+            <ResponsiveAppBar />
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
                 <SideBar />
                 <Box flexGrow={1}>
-                    <ResponsiveAppBar />
                     <div
                         style={{
                             display: "flex",
