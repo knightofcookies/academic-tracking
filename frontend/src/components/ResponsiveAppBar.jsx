@@ -16,7 +16,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import services from '../services/commonServices'
+import adminService from '../services/admin'
 
 const pages = ["Products", "Pricing", "Blog"];
 
@@ -62,38 +62,38 @@ function ResponsiveAppBar() {
     if (!currentPassword || !newPassword) {
       setErrorMessage("Missing department name");
       setTimeout(() => {
-          setErrorMessage("");
+        setErrorMessage("");
       }, 5000);
       return;
     }
     const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin"));
-    if(user) {
+    if (user) {
       const credentials = {
         new_password: newPassword,
         current_password: currentPassword
       }
-      services.setToken(user?.token);
-      services
-            .changeAdminPassword(credentials)
-            .then(() => {
-              alert( "Successfully changed password!" );
-            })
-            .catch((error) => {
-              if (error.response.data.error) {
-                  setErrorMessage(error.response.data.error);
-                  setTimeout(() => {
-                      setErrorMessage("");
-                  }, 5000);
-              } else {
-                  setErrorMessage(
-                      "Error logging in : Please check the console for more details"
-                  );
-                  console.error(error);
-                  setTimeout(() => {
-                      setErrorMessage("");
-                  }, 5000);
-              }
-          });
+      adminService.setToken(user?.token);
+      adminService
+        .changeAdminPassword(credentials)
+        .then(() => {
+          alert("Successfully changed password!");
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            setErrorMessage(error.response.data.error);
+            setTimeout(() => {
+              setErrorMessage("");
+            }, 5000);
+          } else {
+            setErrorMessage(
+              "Error logging in : Please check the console for more details"
+            );
+            console.error(error);
+            setTimeout(() => {
+              setErrorMessage("");
+            }, 5000);
+          }
+        });
     }
 
     // Reset the password fields and close the modal
