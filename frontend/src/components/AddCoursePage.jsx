@@ -58,8 +58,8 @@ const AddCoursePage = () => {
         event.target.reset();
       })
       .catch((error) => {
-        if (error.response.data.error) {
-          setErrorMessage(error.response.data.error);
+        if (error.message) {
+          setErrorMessage(error.message);
           setTimeout(() => {
             setErrorMessage("");
           }, 5000);

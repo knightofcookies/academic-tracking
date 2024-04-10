@@ -61,8 +61,8 @@ const AddSession = () => {
           .catch((error) => {
             console.log("inside error");
             console.log(error);
-            if (error.response.data.error) {
-                setErrorMessage(error.response.data.error);
+            if (error.message) {
+                setErrorMessage(error.message);
                 setTimeout(() => {
                     setErrorMessage("");
                 }, 5000);

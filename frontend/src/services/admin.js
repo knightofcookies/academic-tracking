@@ -92,29 +92,41 @@ const changeAdminPassword = async (data) => {
 const getDepartmentCount = async () => {
     return axiosGET("departments/count", config);
 };
-const addStudent = async (credentials) => {
-  const response = await axios.post(baseUrl + "/students", credentials, config);
-  return response.data;
-}
 
 const getAllCourses = async () => {
-  const response = await axios.get(baseUrl + "/courses", config);
-  return response.data;
-}
+    return axiosGET("courses", config);
+};
 
 const getAllInstructors = async () => {
-  const response = await axios.get(baseUrl + "/instructors", config);
-  return response.data;
-}
+    return axiosGET("instructors", config);
+};
 
 const getAllSessions = async () => {
-  const response = await axios.get(baseUrl + "/sessions", config);
-  return response.data;
+    return axiosGET("sessions", config);
+};
+
+const addTeaches = async (id, data) => {
+    return axiosPOST(`/instructors/${id}/teaches`, data);
+};
+
+const getInstructorCount = async () => {
+    return axiosGET("instructors/count", config);
 }
 
-const addTeaches = async (id, credentials) => {
-  const response = await axios.post(baseUrl + `/instructors/${id}/teaches`, credentials, config);
-  return response.data;
+const getStudentCount = async () => {
+    return axiosGET("students/count", config);
+}
+
+const getCourseCount = async () => {
+    return axiosGET("courses/count", config);
+}
+
+const getProgrammesCount = async () => {
+    return axiosGET("programmes/count", config);
+}
+
+const getSessionCount = async () => {
+    return axiosGET("sessions/count", config);
 }
 
 export default {
@@ -131,7 +143,13 @@ export default {
     createUser,
     changeAdminPassword,
     getDepartmentCount,
+    getAllCourses,
+    getAllInstructors,
+    getAllSessions,
+    addTeaches,
+    getStudentCount,
+    getSessionCount,
+    getInstructorCount,
+    getCourseCount,
+    getProgrammesCount
 };
-export default { setToken, createAdmin, addDepartment, addInstructor, addSession, 
-          getAllDepartments, addProgramme, addCourse, getAllProgrammes, addStudent, createUser, getAllCourses, 
-          getAllInstructors, getAllSessions, addTeaches };

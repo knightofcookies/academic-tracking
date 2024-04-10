@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CardAnalytics from './CardAnalytics'
-import services from '../services/commonServices'
+import adminServices from '../services/admin'
 import Department from '../assets/department_image.png'
 import Instructor from '../assets/instructor_image.png'
 import Student from '../assets/student_image.jpeg'
@@ -19,33 +19,33 @@ export default function Analytics() {
   const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin"));
 
   useEffect(() => {
-    services.setToken(user?.token);
-    services.getDepartmentCount()
+    adminServices.setToken(user?.token);
+    adminServices.getDepartmentCount()
         .then((count) => {
           setDepartmentCount(count);
         })
         .catch(error => console.error("Error fetching programmes:", error));
-    services.getInstructorCount()
+    adminServices.getInstructorCount()
         .then((instructorCount) => {
             setInstructorCount(instructorCount);
         })
         .catch(error => console.error('Error getting instructors count', error));
-    services.getStudentCount()
+    adminServices.getStudentCount()
         .then((studentCount) => {
             setStudentCount(studentCount);
         })
         .catch(error => console.error('Error getting students count', error));
-    services.getCourseCount()
+    adminServices.getCourseCount()
         .then((courseCount) => {
             setCourseCount(courseCount);
         })
         .catch(error => console.error('Error getting students count', error));
-      services.getProgrammesCount()
+      adminServices.getProgrammesCount()
         .then((programmeCount) => {
             setProgrammeCount(programmeCount);
         })
         .catch(error => console.error('Error getting students count', error));
-      services.getSessionCount()
+      adminServices.getSessionCount()
         .then((sessionCount) => {
           setSessionCount(sessionCount);
         })
