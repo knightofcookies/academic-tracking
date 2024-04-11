@@ -169,5 +169,7 @@ export default {
     getCourseCount,
     getProgrammesCount,
     getAllStudents,
-    addTakes
+    addTakes, 
+    getInstructor, 
+    getCourseInstructor
 };
