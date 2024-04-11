@@ -17,7 +17,6 @@ import { Box } from "@mui/system";
 import adminServices from "../services/admin";
 
 const AddTeachesPage = () => {
-    const [securityQuestion, setSecurityQuestion] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [courses, setCourses] = useState([]);
     const [instructors, setInstructors] = useState([]);
@@ -28,10 +27,6 @@ const AddTeachesPage = () => {
     const user = JSON.parse(
         localStorage.getItem("loggedAcademicTrackingAdmin")
     );
-
-    const handleSecurityQuestionChange = (event) => {
-        setSecurityQuestion(event.target.value);
-    };
 
     useEffect(() => {
         adminServices.setToken(user.token);

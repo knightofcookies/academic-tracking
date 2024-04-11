@@ -129,6 +129,14 @@ const getSessionCount = async () => {
     return axiosGET("sessions/count", config);
 }
 
+const getInstructor = async (id) => {
+    return axiosGET(`instructors/${id}`);
+}
+
+const getCourseInstructor = async (id) => {
+    return axiosGET(`instructors/${id}/courses`);
+}
+
 export default {
     setToken,
     createAdmin,
@@ -151,5 +159,7 @@ export default {
     getSessionCount,
     getInstructorCount,
     getCourseCount,
-    getProgrammesCount
+    getProgrammesCount,
+    getInstructor,
+    getCourseInstructor
 };
