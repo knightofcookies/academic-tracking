@@ -34,8 +34,8 @@ export default function InstructorDetails() {
     <div>
       <CssBaseline />
       <ResponsiveAppBar />
-      <Typography variant="h2" component="h2" className='typography-detail'>
-        Courses offered by {instructor.name}
+      <Typography variant="h4" component="h4" className='typography-detail'>
+        Courses offered by Dr {instructor.name}
       </Typography>
       <div className='container-instructor-detail'>
         {details.map(detail => (

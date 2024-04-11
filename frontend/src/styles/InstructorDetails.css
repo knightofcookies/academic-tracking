@@ -1,13 +1,14 @@
 .container-instructor-detail {
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 50px;
     display: grid;
     grid-template-columns: repeat(4, minmax(300px, 1fr));
-    gap: 60px 100px;
+    gap: 60px 80px;
 }
 
 .typography-detail {
-    margin-top: 15px !important;
-    margin-left: 15px !important;
+    margin-top: 30px !important;
+    margin-bottom: 50px !important;
+    margin-left: 25px !important;
 }
