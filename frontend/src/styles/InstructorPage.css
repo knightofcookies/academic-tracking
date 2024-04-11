@@ -1,8 +1,9 @@
 .container-instructor{
-    margin-top: 10px;
-    margin-left: 10px;
+    margin-top: 35px;
+    margin-left: 9%;
     margin-right: 10px;
+    margin-bottom: 40px;
     display: grid;
-    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
     gap: 60px 100px;
 }

@@ -7,11 +7,11 @@ import { CardActionArea } from '@mui/material';
 
 export default function CardAnalytics(props) {
   return (
-    <Card sx={{ maxWidth: 345}}>
+    <Card sx={{ maxWidth: 250 } }>
       <CardActionArea>
         <CardMedia
           component="img"
-          height="200"
+          height="170"
           image={props.image_src}
           alt="green iguana"
         />
@@ -19,9 +19,7 @@ export default function CardAnalytics(props) {
           <Typography gutterBottom variant="h4" component="div" style={{ textAlign: 'center' }} >
             {props.title}
           </Typography>
-          <Typography variant="h5"  color="text.secondary" style={{ textAlign: 'center' }}>
-            {/* Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica */}
+          <Typography variant="h5" color="text.secondary" style={{ textAlign: 'center' }}>
             {props.subTitle}
           </Typography>
         </CardContent>

@@ -38,7 +38,11 @@ export default function InstructorPage() {
       <ErrorMessage errorMessage={errorMessage} />
       <div className='container-instructor'>
         {instructors.map(instructor => (
-          <div key={instructor.id} onClick = {() => handleClick(instructor.id)}><CardAnalytics title = {instructor.name} subTitle = {instructor.designation} image_src = {Instructor}/></div>
+          <div key={instructor.id} onClick = {() => handleClick(instructor.id)}>
+            <CardAnalytics title = {instructor.name} 
+                           subTitle = {instructor.designation} 
+                           image_src = {Instructor}/>
+          </div>
         ))}
       </div>
     </div>
