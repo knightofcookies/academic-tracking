@@ -1,40 +1,50 @@
 import React from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
-const BarChart = (props) => {
-  const chartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Example Dataset',
-        backgroundColor: 'rgba(75,192,192,1)',
-        borderColor: 'rgba(0,0,0,1)',
-        borderWidth: 2,
-        data: [65, 59, 80, 81, 56, 55, 40]
-      }
-    ]
-  };
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-  const config = {
-    type: 'bar',
-    data: data,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
     },
-  };
-  
-
-  return (
-    <Bar
-      data={chartData}
-      options={chartOptions}
-      {...props}
-    />
-  );
+    title: {
+      display: true,
+      text: 'Chart.js Bar Chart',
+    },
+  },
 };
 
-export default BarChart;
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+export const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: labels.map(() => 100),
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+  ],
+};
+
+export default function BarChart() {
+  return <Bar options={options} data={data} />;
+}

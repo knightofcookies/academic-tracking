@@ -1,0 +1,8 @@
+.container-instructor{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    gap: 60px 100px;
+}

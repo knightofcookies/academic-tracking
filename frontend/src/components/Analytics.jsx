@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CardAnalytics from './CardAnalytics'
+import BarChart from './BarChart'
 import adminServices from '../services/admin'
 import Department from '../assets/department_image.png'
 import Instructor from '../assets/instructor_image.png'
@@ -7,9 +8,11 @@ import Student from '../assets/student_image.jpeg'
 import Book from '../assets/book_icon.png'
 import Session from '../assets/session_image.png'
 import Programme from '../assets/programme_image.png'
+import { useNavigate } from 'react-router-dom'
 import '../styles/Analytics.css'
 
 export default function Analytics() {
+  const navigate = useNavigate();
   const [departmentCount, setDepartmentCount] = useState(0);
   const [instructorCount, setInstructorCount] = useState(0);
   const [studentCount, setStudentCount] = useState(0);
@@ -55,13 +58,15 @@ export default function Analytics() {
   }, [])
 
   return (
+    <div>
     <div className='container'>
       <div><CardAnalytics count = {departmentCount} title = {"Department"} image_src = {Department} /></div>
-      <div><CardAnalytics count = {instructorCount} title = {"Faculty"} image_src = {Instructor}/></div>
+      <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics count = {instructorCount} title = {"Faculty"} image_src = {Instructor}/></div>
       <div><CardAnalytics count = {studentCount} title = {"Student"} image_src = {Student}/></div>
       <div><CardAnalytics count = {courseCount} title = {"Courses Offered"} image_src = {Book}/></div>
       <div><CardAnalytics count = {programmeCount} title = {"Programmes Offered"} image_src = {Programme}/></div>
       <div><CardAnalytics count = {sessionCount} title = {"Session Offered"} image_src = {Session}/></div>
+    </div>
     </div>
   )
 }
