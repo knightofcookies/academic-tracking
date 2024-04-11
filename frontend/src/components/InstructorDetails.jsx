@@ -12,9 +12,9 @@ export default function InstructorDetails() {
   const { id }= useParams();
   const [instructor, setInstructor] = useState([]);
   const [details, setDetails] = useState([]);
-  const user = useLoaderData();
+  const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin") || localStorage.getItem("loggedAcademicTrackingUser"));
   useEffect(() => {
-    services.setToken(user.admin.token);
+    services.setToken(user.token);
     services
           .getInstructor(id)
           .then((data) => {

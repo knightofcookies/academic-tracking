@@ -19,7 +19,7 @@ export default function CardAnalytics(props) {
           <Typography gutterBottom variant="h4" component="div" style={{ textAlign: 'center' }} >
             {props.title}
           </Typography>
-          <Typography variant="h5" color="text.secondary" style={{ textAlign: 'center' }}>
+          <Typography variant="h6" color="text.secondary" style={{ textAlign: 'center' }}>
             {props.subTitle}
           </Typography>
         </CardContent>

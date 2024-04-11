@@ -9,12 +9,6 @@ import Book from '../assets/book_icon.png'
 import Session from '../assets/session_image.png'
 import Programme from '../assets/programme_image.png'
 import { useNavigate } from 'react-router-dom'
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 import '../styles/Analytics.css'
 
 export default function Analytics() {
@@ -65,18 +59,6 @@ export default function Analytics() {
 
   return (
     <div>
-      <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <AnalyticsIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" component="div">
-            Analytics
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </Box>
       <div className='container'>
         <div><CardAnalytics title = {departmentCount} subTitle = {"Department"} image_src = {Department} /></div>
         <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title = {instructorCount} subTitle = {"Faculty"} image_src = {Instructor}/></div>
