@@ -17,12 +17,12 @@ export default function CardAnalytics(props) {
         />
         <CardContent>
           <Typography gutterBottom variant="h4" component="div" style={{ textAlign: 'center' }} >
-            {props.count}
+            {props.title}
           </Typography>
           <Typography variant="h5"  color="text.secondary" style={{ textAlign: 'center' }}>
             {/* Lizards are a widespread group of squamate reptiles, with over 6,000
             species, ranging across all continents except Antarctica */}
-            {props.title}
+            {props.subTitle}
           </Typography>
         </CardContent>
       </CardActionArea>

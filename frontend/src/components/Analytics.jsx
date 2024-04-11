@@ -60,12 +60,12 @@ export default function Analytics() {
   return (
     <div>
     <div className='container'>
-      <div><CardAnalytics count = {departmentCount} title = {"Department"} image_src = {Department} /></div>
-      <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics count = {instructorCount} title = {"Faculty"} image_src = {Instructor}/></div>
-      <div><CardAnalytics count = {studentCount} title = {"Student"} image_src = {Student}/></div>
-      <div><CardAnalytics count = {courseCount} title = {"Courses Offered"} image_src = {Book}/></div>
-      <div><CardAnalytics count = {programmeCount} title = {"Programmes Offered"} image_src = {Programme}/></div>
-      <div><CardAnalytics count = {sessionCount} title = {"Session Offered"} image_src = {Session}/></div>
+      <div><CardAnalytics title = {departmentCount} subTitle = {"Department"} image_src = {Department} /></div>
+      <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title = {instructorCount} subTitle = {"Faculty"} image_src = {Instructor}/></div>
+      <div><CardAnalytics title = {studentCount} subTitle = {"Student"} image_src = {Student}/></div>
+      <div><CardAnalytics title = {courseCount} subTitle = {"Courses Offered"} image_src = {Book}/></div>
+      <div><CardAnalytics title = {programmeCount} subTitle = {"Programmes Offered"} image_src = {Programme}/></div>
+      <div><CardAnalytics title = {sessionCount} subTitle = {"Session Offered"} image_src = {Session}/></div>
     </div>
     </div>
   )
