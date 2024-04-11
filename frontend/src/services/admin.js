@@ -105,8 +105,16 @@ const getAllSessions = async () => {
     return axiosGET("sessions", config);
 };
 
+const getAllStudents = async () => {
+    return axiosGET("students", config);
+};
+
 const addTeaches = async (id, data) => {
     return axiosPOST(`instructors/${id}/teaches`, data);
+};
+
+const addTakes = async (roll, data) => {
+    return axiosPOST(`students/${roll}/takes`, data);
 };
 
 const getInstructorCount = async () => {
@@ -151,5 +159,7 @@ export default {
     getSessionCount,
     getInstructorCount,
     getCourseCount,
-    getProgrammesCount
+    getProgrammesCount,
+    getAllStudents,
+    addTakes
 };
