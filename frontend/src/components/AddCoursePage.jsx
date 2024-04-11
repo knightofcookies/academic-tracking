@@ -56,6 +56,7 @@ const AddCoursePage = () => {
       .then(() => {
         alert("Course Added Successfully!!!");
         event.target.reset();
+        setSelectedDepartment("");
       })
       .catch((error) => {
         if (error.message) {
