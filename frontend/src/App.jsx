@@ -1,18 +1,20 @@
-import { AppBar } from "@mui/material";
 import { Container } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
-import ButtonAppBar from "./components/ButtonAppBar";
+import { CssBaseline } from "@mui/material";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import Analytics from "./components/Analytics";
+import './App.css';
 
 function App() {
   const { user } = useLoaderData();
   return (
-  <>
-    <ButtonAppBar />
-    <Container>
-        <p>Hello, {user?.username}</p>
-        <p>This site is under construction.</p>
-    </Container>
-  </>
+    <div>
+      <CssBaseline />
+      <ResponsiveAppBar />
+      <div className="container-app">
+        <Analytics />
+      </div>
+    </div>
   );
 }
 

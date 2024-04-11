@@ -19,7 +19,7 @@ export default function Analytics() {
   const [courseCount, setCourseCount] = useState(0);
   const [programmeCount, setProgrammeCount] = useState(0);
   const [sessionCount, setSessionCount] = useState(0);
-  const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin"));
+  const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin") || localStorage.getItem("loggedAcademicTrackingUser"));
 
   useEffect(() => {
     adminServices.setToken(user?.token);

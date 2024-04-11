@@ -95,7 +95,35 @@ function ResponsiveAppBar() {
           }
         });
     }
-
+    else {
+      const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingUser"));
+      const credentials = {
+        new_password: newPassword,
+        current_password: currentPassword
+      }
+      adminService.setToken(user?.token);
+      adminService
+          .changeUserPassword(credentials)
+          .then(() => {
+            alert("Successfully changed password!");
+          })
+          .catch((error) => {
+            if (error.response.data.error) {
+              setErrorMessage(error.response.data.error);
+              setTimeout(() => {
+                setErrorMessage("");
+              }, 5000);
+            } else {
+              setErrorMessage(
+                "Error logging in : Please check the console for more details"
+              );
+              console.error(error);
+              setTimeout(() => {
+                setErrorMessage("");
+              }, 5000);
+            }
+          });
+    }
     // Reset the password fields and close the modal
     setCurrentPassword('');
     setNewPassword('');

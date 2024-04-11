@@ -89,6 +89,10 @@ const changeAdminPassword = async (data) => {
     return axiosPOST("admin/changepassword", data, config);
 };
 
+const changeUserPassword = async (data) => {
+    return axiosPOST("users/changepassword", data, config);
+}
+
 const getDepartmentCount = async () => {
     return axiosGET("departments/count", config);
 };
@@ -150,6 +154,7 @@ export default {
     addStudent,
     createUser,
     changeAdminPassword,
+    changeUserPassword,
     getDepartmentCount,
     getAllCourses,
     getAllInstructors,
