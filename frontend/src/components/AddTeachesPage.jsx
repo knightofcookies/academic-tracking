@@ -72,12 +72,15 @@ const AddTeachesPage = () => {
         }
 
         const sessionDetails = selectedSession.split(" ");
+        
         const instructorId = instructors.find(
             (instructor) => instructor.name === selectedInstructor
         )?.id;
+
         const courseId = courses.find(
             (course) => course.code === selectedCourse
         )?.id;
+
         const sessionId = sessions.find(
             (session) =>
                 session.season == sessionDetails[0].toLowerCase() &&
