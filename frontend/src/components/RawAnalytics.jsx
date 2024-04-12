@@ -9,7 +9,7 @@ import Book from '../assets/book_icon.png'
 import Session from '../assets/session_image.png'
 import Programme from '../assets/programme_image.png'
 import { useNavigate } from 'react-router-dom'
-import '../styles/RawAnalytics.css'
+//import '../styles/RawAnalytics.css'
 
 export default function Analytics() {
   const navigate = useNavigate();
