@@ -54,9 +54,17 @@ function ResponsiveAppBar() {
     setOpenModal(true);
   }
 
+  const handleClick = () => {
+    const user = JSON.parse(localStorage.getItem("loggedAcademicTrackingAdmin"));
+    if (user && user.type === "administrator") {
+      console.log("admin");
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/");
+    }
+  }
+
   const handlePasswordChange = () => {
-    // Perform password change logic here
-    // You can access the current and new password values from the state variables
     console.log('Current Password:', currentPassword);
     console.log('New Password:', newPassword);
     if (!currentPassword || !newPassword) {
@@ -151,7 +159,7 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
+              onClick={handleClick}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -192,6 +200,9 @@ function ResponsiveAppBar() {
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: "block", md: "none" },
+                  "&:hover": {
+                    cursor: "pointer",
+                  },
                 }}
               >
                 {pages.map((page) => (

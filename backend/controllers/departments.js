@@ -17,6 +17,16 @@ departmentsRouter.get("/count", async (request, response) => {
     return response.json(departmentCount[0].count);
 });
 
+departmentsRouter.get("/courses/count", async(request, response) => {
+    const countQuery = `SELECT department.name, department.id as department_id, COUNT(course.code) as count 
+                        FROM department 
+                        LEFT JOIN course ON course.department_id = department.id 
+                        GROUP BY department.id
+                        ORDER BY department.id;`
+    const coursesCount = await dbConn.query(countQuery);
+    return response.json(coursesCount);
+});
+
 departmentsRouter.post("/", async (request, response) => {
     if (!request.administrator) {
         return response.status(403).end();
