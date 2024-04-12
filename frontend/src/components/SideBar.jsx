@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -15,7 +14,6 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import SchoolIcon from '@mui/icons-material/School';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GradingIcon from '@mui/icons-material/Grading';
 import ClassIcon from '@mui/icons-material/Class';
 import { useNavigate } from "react-router-dom";
@@ -85,14 +83,6 @@ export default function SideBar(props) {
         },
     ];
 
-    const items2 = [
-        {
-            name: 'Analytics',
-            icon: <AnalyticsIcon />,
-            link: '/analytics'
-        },
-    ];
-
     return (
         <CustomThemeProvider>
             <Box sx={{ display: 'flex' }}>
@@ -109,19 +99,6 @@ export default function SideBar(props) {
                     <Box sx={{ overflow: 'auto' }}>
                         <List>
                             {items1.map((item, index) => (
-                                <ListItem key={index} disablePadding>
-                                    <ListItemButton onClick={() => navigate(item.link)}>
-                                        <ListItemIcon>
-                                            {item.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={item.name} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                        </List>
-                        <Divider />
-                        <List>
-                            {items2.map((item, index) => (
                                 <ListItem key={index} disablePadding>
                                     <ListItemButton onClick={() => navigate(item.link)}>
                                         <ListItemIcon>
