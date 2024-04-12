@@ -16,7 +16,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import adminService from '../services/admin'
+import adminService from '../services/admin';
 
 const pages = ["Products", "Pricing", "Blog"];
 
@@ -168,6 +168,7 @@ function ResponsiveAppBar() {
                 letterSpacing: ".1rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer", // Add cursor style
               }}
             >
               Academic Performance Tracker
@@ -318,4 +319,5 @@ function ResponsiveAppBar() {
     </>
   );
 }
+
 export default ResponsiveAppBar;

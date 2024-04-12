@@ -92,7 +92,7 @@ const AddProgrammePage = () => {
               </Typography>
               <form onSubmit={handleSubmit}>
                 <div style={{ width: '100%' }}>
-                  <FormControl fullWidth margin="normal">
+                  {/* <FormControl fullWidth margin="normal">
                     <InputLabel id="department-label">Department</InputLabel>
                     <Select
                       labelId="department-label"
@@ -104,7 +104,22 @@ const AddProgrammePage = () => {
                         <MenuItem key={dep.id} value={dep.name}>{dep.name}</MenuItem>
                       ))}
                     </Select>
+                  </FormControl> */}
+
+                  <FormControl style={{ marginTop: 16, minWidth: 120 }} fullWidth>
+                    <InputLabel id="department-label">Department</InputLabel>
+                    <Select
+                      labelId="department-label"
+                      value={selectedDepartment}
+                      onChange={(event) => setSelectedDepartment(event.target.value)}
+                      label="Department"
+                    >
+                      {departments.map((dep) => (
+                          <MenuItem key={dep.id} value={dep.name}>{dep.name}</MenuItem>
+                        ))}
+                    </Select>
                   </FormControl>
+
                   <TextField label="Degree" variant="outlined" fullWidth margin="normal" id='degree' name='degree' />
                   <TextField label="Branch Name" variant="outlined" fullWidth margin="normal" id='name' name='name' />
                   <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>

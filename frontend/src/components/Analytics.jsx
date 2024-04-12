@@ -62,9 +62,9 @@ export default function Analytics() {
       <div className='container'>
         <div><CardAnalytics title = {departmentCount} subTitle = {"Department"} image_src = {Department} /></div>
         <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title = {instructorCount} subTitle = {"Faculty"} image_src = {Instructor}/></div>
-        <div><CardAnalytics title = {studentCount} subTitle = {"Student"} image_src = {Student}/></div>
-        <div><CardAnalytics title = {courseCount} subTitle = {"Courses Offered"} image_src = {Book}/></div>
-        <div><CardAnalytics title = {programmeCount} subTitle = {"Programmes Offered"} image_src = {Programme}/></div>
+        <div onClick={() => navigate("/analytics/students")}><CardAnalytics title = {studentCount} subTitle = {"Student"} image_src = {Student}/></div>
+        <div onClick={() => navigate("/analytics/courses")}><CardAnalytics title = {courseCount} subTitle = {"Courses Offered"} image_src = {Book}/></div>
+        <div onClick={() => navigate("/analytics/programmes")}><CardAnalytics title = {programmeCount} subTitle = {"Programmes Offered"} image_src = {Programme}/></div>
         <div><CardAnalytics title = {sessionCount} subTitle = {"Session Offered"} image_src = {Session}/></div>
       </div>
     </div>
