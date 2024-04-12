@@ -1,10 +1,10 @@
-import CustomThemeProvider from './CustomThemeProvider';
+import SideBar from "./SideBar";
 
 export default function AnalyticsStudent() {
   return (
-    <CustomThemeProvider>
+    <SideBar>
       Under construction.
-    </CustomThemeProvider>
+    </SideBar>
   );
 }
 

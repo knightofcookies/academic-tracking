@@ -8,12 +8,10 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import ErrorMessage from "./ErrorMessage";
 import SideBar from "./SideBar";
 import { Box } from "@mui/system";
 import adminServices from "../services/admin";
-import CustomThemeProvider from './CustomThemeProvider';
 
 const AddTeachesPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
@@ -65,7 +63,7 @@ const AddTeachesPage = () => {
         }
 
         const sessionDetails = selectedSession.split(" ");
-        
+
         const instructorId = instructors.find(
             (instructor) => instructor.name === selectedInstructor
         )?.id;
@@ -114,11 +112,9 @@ const AddTeachesPage = () => {
     };
 
     return (
-        <CustomThemeProvider>
-            <ResponsiveAppBar />
+        <SideBar>
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
-                <SideBar />
                 <Box flexGrow={1}>
                     <div
                         style={{
@@ -214,13 +210,11 @@ const AddTeachesPage = () => {
                                             {sessions.map((session) => (
                                                 <MenuItem
                                                     key={session.id}
-                                                    value={`${session.season.toUpperCase()} ${
-                                                        session.start_year
-                                                    }`}
+                                                    value={`${session.season.toUpperCase()} ${session.start_year
+                                                        }`}
                                                 >
-                                                    {`${session.season.toUpperCase()} ${
-                                                        session.start_year
-                                                    }`}
+                                                    {`${session.season.toUpperCase()} ${session.start_year
+                                                        }`}
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -240,7 +234,7 @@ const AddTeachesPage = () => {
                     </div>
                 </Box>
             </Box>
-        </CustomThemeProvider>
+        </SideBar>
     );
 };
 

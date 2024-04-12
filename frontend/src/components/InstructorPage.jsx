@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import services from '../services/admin'
-import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
 import CardAnalytics from './CardAnalytics';
 import '../styles/InstructorPage.css'
 import Instructor from '../assets/instructorImage.png';
 import { useNavigate } from 'react-router-dom';
-import CustomThemeProvider from './CustomThemeProvider';
+import SideBar from './SideBar';
 
 export default function InstructorPage() {
   const [instructors, setInstructors] = useState([]);
@@ -43,8 +42,7 @@ export default function InstructorPage() {
     navigate(`/analytics/instructors/instructor_page/${id}`);
   }
   return (
-    <CustomThemeProvider>
-      <ResponsiveAppBar />
+    <SideBar>
       <ErrorMessage errorMessage={errorMessage} />
       <div className='container-instructor'>
         {instructors.map(instructor => (
@@ -55,6 +53,6 @@ export default function InstructorPage() {
           </div>
         ))}
       </div>
-    </CustomThemeProvider>
+    </SideBar>
   );
 }

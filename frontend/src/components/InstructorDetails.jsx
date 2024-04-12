@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Typography } from '@mui/material';
 import services from '../services/admin'
-import ResponsiveAppBar from './ResponsiveAppBar';
 import CardAnalytics from './CardAnalytics';
 import '../styles/InstructorDetails.css';
 import Book from '../assets/book_image.png';
-import CustomThemeProvider from './CustomThemeProvider';
+import SideBar from './SideBar';
 
 export default function InstructorDetails() {
   const { id } = useParams();
@@ -33,8 +32,7 @@ export default function InstructorDetails() {
   }, [user, id]);
 
   return (
-    <CustomThemeProvider>
-      <ResponsiveAppBar />
+    <SideBar>
       <Typography variant="h4" component="h4" className='typography-detail'>
         Courses offered by Dr {instructor.name}
       </Typography>
@@ -43,6 +41,6 @@ export default function InstructorDetails() {
           <div key={detail.course_id}><CardAnalytics title={`${detail.course_code} ${detail.course_title}`} subTitle={`${detail.start_year} ${detail.season}`} image_src={Book} /></div>
         ))}
       </div>
-    </CustomThemeProvider>
+    </SideBar>
   );
 }

@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
 import SideBar from './SideBar';
 import { Box } from '@mui/system';
 import adminServices from '../services/admin';
-import CustomThemeProvider from './CustomThemeProvider';
 
 const seasons = [
   'Monsoon',
@@ -67,13 +65,11 @@ const AddSession = () => {
   }
 
   return (
-    <CustomThemeProvider>
-      <ResponsiveAppBar />
+    <SideBar>
       <ErrorMessage errorMessage={errorMessage} />
       <Box display="flex">
-        <SideBar />
         <Box flexGrow={1}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundImage: 'linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '85vh' }}>
             <Paper style={{ padding: 24, borderRadius: 8 }}>
               <Typography variant="h5" align="center" gutterBottom>
                 Add Session
@@ -105,7 +101,7 @@ const AddSession = () => {
           </div>
         </Box>
       </Box>
-    </CustomThemeProvider>
+    </SideBar>
   );
 };
 

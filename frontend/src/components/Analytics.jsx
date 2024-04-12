@@ -9,7 +9,6 @@ import Session from '../assets/session_image.png'
 import Programme from '../assets/programme_image.png'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Analytics.css'
-import CustomThemeProvider from './CustomThemeProvider';
 
 export default function Analytics() {
   const navigate = useNavigate();
@@ -58,15 +57,13 @@ export default function Analytics() {
   }, [user])
 
   return (
-    <CustomThemeProvider>
-      <div className='container'>
-        <div><CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} /></div>
-        <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title={instructorCount} subTitle={"Faculty"} image_src={Instructor} /></div>
-        <div><CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} /></div>
-        <div><CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} /></div>
-        <div><CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} /></div>
-        <div><CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} /></div>
-      </div>
-    </CustomThemeProvider>
+    <div className='container'>
+      <div><CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} /></div>
+      <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title={instructorCount} subTitle={"Faculty"} image_src={Instructor} /></div>
+      <div><CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} /></div>
+      <div><CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} /></div>
+      <div><CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} /></div>
+      <div><CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} /></div>
+    </div>
   )
 }
