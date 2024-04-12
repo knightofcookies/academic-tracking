@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -9,10 +8,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import loginService from '../services/login';
 import ErrorMessage from './ErrorMessage';
+import CustomThemeProvider from './CustomThemeProvider';
 
 function Copyright(props) {
   return (
@@ -27,10 +26,6 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
 export default function SignInSide() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -42,50 +37,49 @@ export default function SignInSide() {
     if (!username || !password) {
       setErrorMessage("Missing username or password");
       setTimeout(() => {
-          setErrorMessage("");
+        setErrorMessage("");
       }, 5000);
       return;
     }
     const credentials = {
-        username,
-        password,
+      username,
+      password,
     };
     loginService
-            .loginUser(credentials)
-            .then((user) => {
-                window.localStorage.setItem(
-                    "loggedAcademicTrackingUser",
-                    JSON.stringify(user)
-                );
-                setErrorMessage("");
-                navigate("/", { replace: true });
-                // navigate on success
-                // navigate("/admin/dashboard");
-            })
-            .catch((error) => {
-              if (error.response.data.error) {
-                  setErrorMessage(error.response.data.error);
-                  setTimeout(() => {
-                      setErrorMessage("");
-                  }, 5000);
-              } else {
-                  setErrorMessage(
-                      "Error logging in : Please check the console for more details"
-                  );
-                  console.error(error);
-                  setTimeout(() => {
-                      setErrorMessage("");
-                  }, 5000);
-              }
-          });
+      .loginUser(credentials)
+      .then((user) => {
+        window.localStorage.setItem(
+          "loggedAcademicTrackingUser",
+          JSON.stringify(user)
+        );
+        setErrorMessage("");
+        navigate("/", { replace: true });
+        // navigate on success
+        // navigate("/admin/dashboard");
+      })
+      .catch((error) => {
+        if (error.response.data.error) {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        } else {
+          setErrorMessage(
+            "Error logging in : Please check the console for more details"
+          );
+          console.error(error);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        }
+      });
     console.log("Sign in successful");
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <CustomThemeProvider>
       <ErrorMessage errorMessage={errorMessage} />
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
         <Grid
           item
           xs={false}
@@ -149,7 +143,7 @@ export default function SignInSide() {
                 fullWidth
                 variant="outlined"
                 sx={{ mt: 3, mb: 2 }}
-                onClick = {() => navigate('/admin/signin')}
+                onClick={() => navigate('/admin/signin')}
               >
                 Sign In as Admin
               </Button>
@@ -170,6 +164,6 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </CustomThemeProvider>
   );
 }

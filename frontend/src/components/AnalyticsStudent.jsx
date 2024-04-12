@@ -1,10 +1,10 @@
-import React from 'react'
+import CustomThemeProvider from './CustomThemeProvider';
 
 export default function AnalyticsStudent() {
   return (
-    <div>
-        
-    </div>
-  )
+    <CustomThemeProvider>
+      Under construction.
+    </CustomThemeProvider>
+  );
 }
 

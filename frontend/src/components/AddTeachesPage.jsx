@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Typography,
-    TextField,
     Button,
     Paper,
     FormControl,
@@ -9,12 +8,12 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
-import { CssBaseline } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import ErrorMessage from "./ErrorMessage";
 import SideBar from "./SideBar";
 import { Box } from "@mui/system";
 import adminServices from "../services/admin";
+import CustomThemeProvider from './CustomThemeProvider';
 
 const AddTeachesPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
@@ -53,11 +52,10 @@ const AddTeachesPage = () => {
                 console.log(data);
             })
             .catch((error) => console.error("Error fetching Sessions:", error));
-    }, []);
+    }, [user]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
         if (!selectedCourse || !selectedInstructor || !selectedSession) {
             setErrorMessage("Missing required fields");
             setTimeout(() => {
@@ -116,8 +114,7 @@ const AddTeachesPage = () => {
     };
 
     return (
-        <div>
-            <CssBaseline />
+        <CustomThemeProvider>
             <ResponsiveAppBar />
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
@@ -133,7 +130,6 @@ const AddTeachesPage = () => {
                                 "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)",
                         }}
                     >
-                        <CssBaseline />
                         <Paper style={{ padding: 24, borderRadius: 8 }}>
                             <Typography
                                 variant="h5"
@@ -244,7 +240,7 @@ const AddTeachesPage = () => {
                     </div>
                 </Box>
             </Box>
-        </div>
+        </CustomThemeProvider>
     );
 };
 

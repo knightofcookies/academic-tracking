@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, TextField, Button, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { CssBaseline } from '@mui/material';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
 import SideBar from './SideBar';
 import { Box } from '@mui/system';
 import adminServices from '../services/admin';
+import CustomThemeProvider from './CustomThemeProvider';
 
 const AddTakesPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [courses, setCourses] = useState([]);
     const [instructors, setInstructors] = useState([]);
-    const [students, setStudents] = useState([]);
     const [sessions, setSessions] = useState([]);
     const [selectedInstructor, setSelectedInstructor] = useState("");
     const [selectedCourse, setSelectedCourse] = useState("");
@@ -46,14 +45,7 @@ const AddTakesPage = () => {
             .catch((error) =>
                 console.error("Error fetching Instructors:", error)
             );
-        adminServices
-            .getAllStudents()
-            .then((data) => {
-                setStudents(data);
-                console.log(data);
-            })
-            .catch((error) => console.error("Error fetching Students:", error));
-    }, []);
+    }, [user]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -62,7 +54,7 @@ const AddTakesPage = () => {
         const grade = formData.get("grade");
         const semester_number = formData.get("semester_number");
         if (!roll ||
-            !selectedCourse || 
+            !selectedCourse ||
             !selectedSession ||
             !grade ||
             !semester_number ||
@@ -94,7 +86,7 @@ const AddTakesPage = () => {
         const credentials = {
             course_id: courseId,
             session_id: sessionId,
-            instructor_id : instructorId,
+            instructor_id: instructorId,
             semester_number: semester_number,
             grade: grade
         };
@@ -128,8 +120,7 @@ const AddTakesPage = () => {
     };
 
     return (
-        <div>
-            <CssBaseline />
+        <CustomThemeProvider>
             <ResponsiveAppBar />
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
@@ -145,7 +136,6 @@ const AddTakesPage = () => {
                                 "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)",
                         }}
                     >
-                        <CssBaseline />
                         <Paper style={{ padding: 24, borderRadius: 8 }}>
                             <Typography
                                 variant="h5"
@@ -211,13 +201,11 @@ const AddTakesPage = () => {
                                             {sessions.map((session) => (
                                                 <MenuItem
                                                     key={session.id}
-                                                    value={`${session.season.toUpperCase()} ${
-                                                        session.start_year
-                                                    }`}
+                                                    value={`${session.season.toUpperCase()} ${session.start_year
+                                                        }`}
                                                 >
-                                                    {`${session.season.toUpperCase()} ${
-                                                        session.start_year
-                                                    }`}
+                                                    {`${session.season.toUpperCase()} ${session.start_year
+                                                        }`}
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -280,7 +268,7 @@ const AddTakesPage = () => {
                     </div>
                 </Box>
             </Box>
-        </div>
+        </CustomThemeProvider>
     );
 };
 

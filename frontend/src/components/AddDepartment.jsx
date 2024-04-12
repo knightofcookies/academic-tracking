@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Typography, TextField, Button, Paper } from "@mui/material";
-import { CssBaseline } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import ErrorMessage from "./ErrorMessage";
 import SideBar from "./SideBar";
 import { Box } from "@mui/system";
 import adminServices from "../services/admin";
+import CustomThemeProvider from './CustomThemeProvider';
 
 const AddDepartment = () => {
     const [errorMessage, setErrorMessage] = useState("");
@@ -55,8 +55,7 @@ const AddDepartment = () => {
     };
 
     return (
-        <div>
-            <CssBaseline />
+        <CustomThemeProvider>
             <ResponsiveAppBar />
             <ErrorMessage  errorMessage={errorMessage} />
             <Box display="flex">
@@ -105,7 +104,7 @@ const AddDepartment = () => {
                     </div>
                 </Box>
             </Box>
-        </div>
+        </CustomThemeProvider>
     );
 };
 
