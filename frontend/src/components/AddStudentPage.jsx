@@ -108,7 +108,7 @@ const AddStudentPage = () => {
                   <TextField label="Name" variant="outlined" fullWidth margin="normal" id='name' name='name' />
                   <TextField label="Email ID" variant="outlined" fullWidth margin="normal" id='email' name='email' />
 
-                  <FormControl fullWidth margin="normal">
+                  {/* <FormControl fullWidth margin="normal">
                     <InputLabel id="degree-label">Degree</InputLabel>
                     <Select
                       labelId="degree-label"
@@ -120,15 +120,44 @@ const AddStudentPage = () => {
                         <MenuItem key={degree} value={degree}>{degree}</MenuItem>
                       ))}
                     </Select>
+                  </FormControl> */}
+
+                  {/* here is degree */}
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel id="degree-label">Degree</InputLabel>
+                    <Select
+                      labelId="degree-label"
+                      value={selectedDegree}
+                      onChange={(event) => setSelectedDegree(event.target.value)}
+                      label="degree-label"
+                    >
+                      {uniqueDegrees.map(degree => (
+                        <MenuItem key={degree} value={degree}>{degree}</MenuItem>
+                      ))}
+                    </Select>
                   </FormControl>
 
-                  <FormControl fullWidth margin="normal">
+                  {/* <FormControl fullWidth margin="normal">
                     <InputLabel id="programme-label">Programme</InputLabel>
                     <Select
                       labelId="programme-label"
                       id="programme"
                       value={selectedProgramme}
                       onChange={(event) => setSelectedProgramme(event.target.value)}
+                    >
+                      {uniqueProgrammeNames.map(name => (
+                        <MenuItem key={name} value={name}>{name}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl> */}
+
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel id="programme-label">Programme</InputLabel>
+                    <Select
+                      labelId="programme-label"
+                      value={selectedProgramme}
+                      onChange={(event) => setSelectedProgramme(event.target.value)}
+                      label="degree-label"
                     >
                       {uniqueProgrammeNames.map(name => (
                         <MenuItem key={name} value={name}>{name}</MenuItem>

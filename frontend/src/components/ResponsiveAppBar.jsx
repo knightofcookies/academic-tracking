@@ -167,6 +167,7 @@ function ResponsiveAppBar() {
                 letterSpacing: ".1rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer", // Add cursor style
               }}
             >
               Academic Performance Tracker
@@ -318,4 +319,5 @@ function ResponsiveAppBar() {
     </>
   );
 }
+
 export default ResponsiveAppBar;

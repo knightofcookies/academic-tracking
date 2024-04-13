@@ -138,11 +138,12 @@ const router = createBrowserRouter([
     loader: adminUserLoader
   },
   {
-    path: "analytics/instructors/instructor_page/:id",
+    path: "analytics/instructors/instructor_page",
     element: <InstructorDetails />,
     errorElement: <ErrorPage />,
     loader: adminUserLoader
   }
+
 ])
 
 

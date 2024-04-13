@@ -88,19 +88,21 @@ const AddInstructorPage = () => {
                 <div style={{ width: '100%' }}>
                   <TextField label="Instructor Name" variant="outlined" fullWidth margin="normal" id='instructor_name' name='instructor_name' />
                   <TextField label="Designation" variant="outlined" fullWidth margin="normal" id='designation' name='designation' />
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel id="department-label">Department</InputLabel>
-                    <Select
-                      labelId="department-label"
-                      id="department"
-                      value={selectedDepartment}
-                      onChange={(event) => setSelectedDepartment(event.target.value)}
-                    >
-                      {departments.map((dep) => (
+                  
+                  <FormControl style={{ marginTop: 16, minWidth: 120 }} fullWidth>
+                  <InputLabel id="department-label">Department</InputLabel>
+                  <Select
+                    labelId="department-label"
+                    value={selectedDepartment}
+                    onChange={(event) => setSelectedDepartment(event.target.value)}
+                    label="Department"
+                  >
+                    {departments.map((dep) => (
                         <MenuItem key={dep.id} value={dep.name}>{dep.name}</MenuItem>
                       ))}
-                    </Select>
-                  </FormControl>
+                  </Select>
+                </FormControl>
+
                   <Button variant="contained" color="primary" style={{ marginTop: 24 }} fullWidth type='submit'>
                     Add Instructor
                   </Button>
