@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Typography, TextField, Button, Paper } from "@mui/material";
-import { CssBaseline } from "@mui/material";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import ErrorMessage from "./ErrorMessage";
 import SideBar from "./SideBar";
 import { Box } from "@mui/system";
@@ -55,21 +53,16 @@ const AddDepartment = () => {
     };
 
     return (
-        <div>
-            <CssBaseline />
-            <ResponsiveAppBar />
-            <ErrorMessage  errorMessage={errorMessage} />
+        <SideBar>
+            <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
-                <SideBar />
                 <Box flexGrow={1}>
                     <div
                         style={{
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            height: "100vh",
-                            backgroundImage:
-                                "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)",
+                            height: "85vh"
                         }}
                     >
                         <Paper style={{ padding: 24, borderRadius: 8 }}>
@@ -105,7 +98,7 @@ const AddDepartment = () => {
                     </div>
                 </Box>
             </Box>
-        </div>
+        </SideBar>
     );
 };
 

@@ -1,4 +1,11 @@
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import PersonIcon from '@mui/icons-material/Person';
@@ -6,109 +13,109 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SchoolIcon from '@mui/icons-material/School';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 import GradingIcon from '@mui/icons-material/Grading';
 import ClassIcon from '@mui/icons-material/Class';
 import { useNavigate } from "react-router-dom";
+import CustomThemeProvider from "./CustomThemeProvider";
+import ResponsiveAppBar from "./ResponsiveAppBar";
 
-export default function SideBar() {
-  const navigate = useNavigate();
+const drawerWidth = 240;
 
-  const handleHomeClick = (event) => {
-    event.preventDefault();
-    console.log("Home");
-    navigate("/admin/dashboard");
-  }
+export default function SideBar(props) {
+    const navigate = useNavigate();
 
-  const handleAddAdminClick = (event) => {
-    event.preventDefault();
-    console.log("Add Admin");
-    navigate('/admin/add_admin');
-  }
+    const items1 = [
+        {
+            name: 'Home',
+            icon: <HomeOutlinedIcon />,
+            link: '/admin/dashboard'
+        },
+        {
+            name: 'Add Admin',
+            icon: <LockPersonIcon />,
+            link: '/admin/add_admin'
+        },
+        {
+            name: 'Add User',
+            icon: <PersonIcon />,
+            link: '/admin/add_user'
+        },
+        {
+            name: 'Add Instructor',
+            icon: <PeopleOutlinedIcon />,
+            link: '/admin/instructors'
+        },
+        {
+            name: 'Add Programme',
+            icon: <SchoolIcon />,
+            link: '/admin/programmes'
+        },
+        {
+            name: 'Add Student',
+            icon: <PeopleOutlinedIcon />,
+            link: '/admin/students'
+        },
+        {
+            name: 'Add Department',
+            icon: <ApartmentIcon />,
+            link: '/admin/departments'
+        },
+        {
+            name: 'Add Course',
+            icon: <LibraryBooksIcon />,
+            link: '/admin/courses'
+        },
+        {
+            name: 'Add Session',
+            icon: <ReceiptOutlinedIcon />,
+            link: '/admin/sessions'
+        },
+        {
+            name: 'Add Instructor Data',
+            icon: <ClassIcon />,
+            link: '/admin/teaches'
+        },
+        {
+            name: 'Add Student Data',
+            icon: <GradingIcon />,
+            link: '/admin/dashboard'
+        },
+    ];
 
-  const handleAddUserClick = (event) => {
-    event.preventDefault();
-    console.log("Add User");
-    navigate('/admin/add_user')
-  }
-
-  const handleAddInstructorClick = (event) => {
-    event.preventDefault();
-    console.log("Add Instructor");
-    navigate('/admin/instructors');  
-  }
-
-  const handleAddStudentClick = (event) => {
-    event.preventDefault();
-    console.log("Add Student");
-    navigate('/admin/students');
-  }
-
-  const handleAddDepartmentClick = (event) => {
-    event.preventDefault();
-    console.log("Add Department");
-    navigate('/admin/departments'); 
-  }
-
-  const handleAddCourseClick = (event) => {
-    event.preventDefault();
-    console.log("Add Course");
-    navigate('/admin/courses');
-  }
-
-  const handleAddSessionClick = (event) => {
-    event.preventDefault();
-    console.log("Add Session");
-    navigate('/admin/sessions');
-  }
-
-  const handleAddProgrammeClick = (event) => {
-    event.preventDefault();
-    console.log("Add Programme");
-    navigate('/admin/programmes');
-  }
-    
-  const handleAnalyticsClick = (event) => {
-    event.preventDefault();
-    console.log("Analytics");
-    navigate('/analytics')
-  }
-
-  const handleInstructorDataClick = (event) => {
-    event.preventDefault();
-    console.log("Instructor Data");
-    navigate('/admin/teaches')
-  }
-
-  const handleStudentDataClick = (event) => {
-    event.preventDefault();
-    console.log("Student Data");
-    navigate('/admin/takes')
-  }
-
-  return (
-    <Sidebar style={{ height: '100vh' }}>
-      <Menu>
-        <MenuItem icon={<MenuOutlinedIcon />} style={{ textAlign: "center" }}>
-          <h2>Admin</h2>
-        </MenuItem>
-        <MenuItem icon={<HomeOutlinedIcon />} onClick={handleHomeClick}>Home</MenuItem>
-        <MenuItem icon={<LockPersonIcon />} onClick={handleAddAdminClick}>Add Admin</MenuItem>
-        <MenuItem icon={<PersonIcon />} onClick={handleAddUserClick}>Add User</MenuItem>
-        <MenuItem icon={<PeopleOutlinedIcon />} onClick={handleAddInstructorClick}>Add Instructor</MenuItem>
-        <MenuItem icon={<SchoolIcon />} onClick={handleAddProgrammeClick}>Add Programme</MenuItem>
-        <MenuItem icon={<PeopleOutlinedIcon />} onClick={handleAddStudentClick}>Add Student</MenuItem>
-        <MenuItem icon={<ApartmentIcon />} onClick={handleAddDepartmentClick}>Add Department</MenuItem>
-        <MenuItem icon={<LibraryBooksIcon />} onClick={handleAddCourseClick}>Add Course</MenuItem>
-        <MenuItem icon={<ReceiptOutlinedIcon />} onClick={handleAddSessionClick}>Add Session</MenuItem>
-        <MenuItem icon={<ClassIcon />} onClick={handleInstructorDataClick}>Add Instructor Data</MenuItem>
-        <MenuItem icon={<GradingIcon />} onClick={handleStudentDataClick}>Add Student Data</MenuItem>
-        <MenuItem icon={<AnalyticsIcon />} onClick={handleAnalyticsClick}>Analytics</MenuItem>
-      </Menu>
-    </Sidebar>
-  );
+    return (
+        <CustomThemeProvider>
+            <Box sx={{ display: 'flex' }}>
+                <ResponsiveAppBar />
+                <Drawer
+                    variant="permanent"
+                    sx={{
+                        width: drawerWidth,
+                        flexShrink: 0,
+                        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                    }}
+                >
+                    <Toolbar />
+                    <Box sx={{ overflow: 'auto' }}>
+                        <List>
+                            {items1.map((item, index) => (
+                                <ListItem key={index} disablePadding>
+                                    <ListItemButton onClick={() => navigate(item.link)}>
+                                        <ListItemIcon>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.name} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Box>
+                </Drawer>
+                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <Toolbar />
+                    {props.children}
+                </Box>
+            </Box>
+        </CustomThemeProvider>
+    );
 }
-
-

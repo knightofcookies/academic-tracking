@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,7 +6,7 @@ import { CardActionArea } from '@mui/material';
 
 export default function CardAnalytics(props) {
   return (
-    <Card sx={{ maxWidth: 250 } }>
+    <Card sx={{ maxWidth: 250 }}>
       <CardActionArea>
         <CardMedia
           component="img"

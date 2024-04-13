@@ -1,10 +1,10 @@
-import React from 'react'
+import SideBar from "./SideBar";
 
 export default function AnalyticsStudent() {
   return (
-    <div>
-        
-    </div>
-  )
+    <SideBar>
+      Under construction.
+    </SideBar>
+  );
 }
 

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -9,10 +8,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import signupServices from '../services/signup';
 import ErrorMessage from './ErrorMessage';
+import CustomThemeProvider from './CustomThemeProvider';
 
 function Copyright(props) {
   return (
@@ -27,12 +26,8 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
 export default function SignUpSide() {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,7 +38,7 @@ export default function SignUpSide() {
     if (!username || !password || !email) {
       setErrorMessage("Missing username or password or email");
       setTimeout(() => {
-          setErrorMessage("");
+        setErrorMessage("");
       }, 5000);
       return;
     }
@@ -53,27 +48,27 @@ export default function SignUpSide() {
       password
     }
     signupServices
-          .signupUser(credentials)
-          .then((user) => {
-            console.log("Sign Up Successfull");
-            navigate("/signin", {replace: true});
-          })
-          .catch((error) => {
-            if (error.response.data.error) {
-                setErrorMessage(error.response.data.error);
-                setTimeout(() => {
-                    setErrorMessage("");
-                }, 5000);
-            } else {
-                setErrorMessage(
-                    "Error logging in : Please check the console for more details"
-                );
-                console.error(error);
-                setTimeout(() => {
-                    setErrorMessage("");
-                }, 5000);
-            }
-        });
+      .signupUser(credentials)
+      .then((user) => {
+        alert(`Signup successful! Welcome, ${user.username}`);
+        navigate("/signin", { replace: true });
+      })
+      .catch((error) => {
+        if (error.response.data.error) {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        } else {
+          setErrorMessage(
+            "Error logging in : Please check the console for more details"
+          );
+          console.error(error);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        }
+      });
     console.log({
       username: data.get('username'),
       email: data.get('email'),
@@ -82,10 +77,9 @@ export default function SignUpSide() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <CustomThemeProvider>
       <ErrorMessage errorMessage={errorMessage} />
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
         <Grid
           item
           xs={false}
@@ -159,7 +153,7 @@ export default function SignUpSide() {
                 fullWidth
                 variant="outlined"
                 sx={{ mt: 3, mb: 2 }}
-                onClick = {() => navigate('/admin/signin')}
+                onClick={() => navigate('/admin/signin')}
               >
                 Sign In as Admin
               </Button>
@@ -175,6 +169,6 @@ export default function SignUpSide() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </CustomThemeProvider>
   );
 }

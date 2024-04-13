@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Typography,
-    TextField,
     Button,
     Paper,
     FormControl,
@@ -9,8 +8,6 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
-import { CssBaseline } from "@mui/material";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import ErrorMessage from "./ErrorMessage";
 import SideBar from "./SideBar";
 import { Box } from "@mui/system";
@@ -53,11 +50,10 @@ const AddTeachesPage = () => {
                 console.log(data);
             })
             .catch((error) => console.error("Error fetching Sessions:", error));
-    }, []);
+    }, [user]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
         if (!selectedCourse || !selectedInstructor || !selectedSession) {
             setErrorMessage("Missing required fields");
             setTimeout(() => {
@@ -67,7 +63,7 @@ const AddTeachesPage = () => {
         }
 
         const sessionDetails = selectedSession.split(" ");
-        
+
         const instructorId = instructors.find(
             (instructor) => instructor.name === selectedInstructor
         )?.id;
@@ -116,12 +112,9 @@ const AddTeachesPage = () => {
     };
 
     return (
-        <div>
-            <CssBaseline />
-            <ResponsiveAppBar />
+        <SideBar>
             <ErrorMessage errorMessage={errorMessage} />
             <Box display="flex">
-                <SideBar />
                 <Box flexGrow={1}>
                     <div
                         style={{
@@ -133,7 +126,6 @@ const AddTeachesPage = () => {
                                 "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)",
                         }}
                     >
-                        <CssBaseline />
                         <Paper style={{ padding: 24, borderRadius: 8 }}>
                             <Typography
                                 variant="h5"
@@ -218,13 +210,11 @@ const AddTeachesPage = () => {
                                             {sessions.map((session) => (
                                                 <MenuItem
                                                     key={session.id}
-                                                    value={`${session.season.toUpperCase()} ${
-                                                        session.start_year
-                                                    }`}
+                                                    value={`${session.season.toUpperCase()} ${session.start_year
+                                                        }`}
                                                 >
-                                                    {`${session.season.toUpperCase()} ${
-                                                        session.start_year
-                                                    }`}
+                                                    {`${session.season.toUpperCase()} ${session.start_year
+                                                        }`}
                                                 </MenuItem>
                                             ))}
                                         </Select>
@@ -244,7 +234,7 @@ const AddTeachesPage = () => {
                     </div>
                 </Box>
             </Box>
-        </div>
+        </SideBar>
     );
 };
 

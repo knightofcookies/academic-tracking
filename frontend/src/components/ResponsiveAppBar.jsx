@@ -16,7 +16,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import adminService from '../services/admin';
+import adminService from '../services/admin'
+import ErrorMessage from "./ErrorMessage";
 
 const pages = ["Products", "Pricing", "Blog"];
 
@@ -65,10 +66,8 @@ function ResponsiveAppBar() {
   }
 
   const handlePasswordChange = () => {
-    console.log('Current Password:', currentPassword);
-    console.log('New Password:', newPassword);
     if (!currentPassword || !newPassword) {
-      setErrorMessage("Missing department name");
+      setErrorMessage("Missing fields");
       setTimeout(() => {
         setErrorMessage("");
       }, 5000);
@@ -111,26 +110,26 @@ function ResponsiveAppBar() {
       }
       adminService.setToken(user?.token);
       adminService
-          .changeUserPassword(credentials)
-          .then(() => {
-            alert("Successfully changed password!");
-          })
-          .catch((error) => {
-            if (error.response.data.error) {
-              setErrorMessage(error.response.data.error);
-              setTimeout(() => {
-                setErrorMessage("");
-              }, 5000);
-            } else {
-              setErrorMessage(
-                "Error logging in : Please check the console for more details"
-              );
-              console.error(error);
-              setTimeout(() => {
-                setErrorMessage("");
-              }, 5000);
-            }
-          });
+        .changeUserPassword(credentials)
+        .then(() => {
+          alert("Successfully changed password!");
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            setErrorMessage(error.response.data.error);
+            setTimeout(() => {
+              setErrorMessage("");
+            }, 5000);
+          } else {
+            setErrorMessage(
+              "Error logging in : Please check the console for more details"
+            );
+            console.error(error);
+            setTimeout(() => {
+              setErrorMessage("");
+            }, 5000);
+          }
+        });
     }
     // Reset the password fields and close the modal
     setCurrentPassword('');
@@ -151,7 +150,7 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -316,6 +315,7 @@ function ResponsiveAppBar() {
           </Button>
         </Box>
       </Modal>
+      <ErrorMessage errorMessage={errorMessage} />
     </>
   );
 }
