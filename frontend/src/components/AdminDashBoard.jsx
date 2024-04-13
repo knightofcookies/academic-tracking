@@ -2,7 +2,6 @@ import React from 'react';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import SideBar from './SideBar';
 import { CssBaseline } from '@mui/material';
-// import Analytics from './Analytics';
 import Analytics from './Analytics';
 import '../styles/AdminDashboard.css'
 
