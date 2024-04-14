@@ -35,7 +35,7 @@ export default function SessionDetails() {
   return (
     <SideBar>
       <Typography variant="h4" component="h4" className='typography-detail'>
-        {`Courses offered in ${session.season.toUpperCase()} ${session.start_year}`}
+        {`Courses offered in ${session.season} ${session.start_year}`}
       </Typography>
       <Grid
                 container

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import CardAnalytics from './CardAnalytics'
 import adminServices from '../services/admin'
+import Grid from "@mui/material/Grid";
 import Department from '../assets/department_image.png'
 import Instructor from '../assets/instructor_image.png'
 import Student from '../assets/student_image.jpeg'
@@ -59,14 +60,40 @@ export default function Analytics() {
 
   return (
     <SideBar>
-      <div className='container'>
+      {/* <div className='container'>
         <div><CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} /></div>
         <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title={instructorCount} subTitle={"Faculty"} image_src={Instructor} /></div>
         <div><CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} /></div>
         <div><CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} /></div>
         <div><CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} /></div>
         <div onClick={() => navigate("/analytics/sessions")}><CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} /></div>
-      </div>
+      </div> */}
+      <Grid
+                container
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12 }}
+                className="grid-container container"
+            >
+      <Grid item xs={2} sm={4} md={4}>
+          <CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} />
+      </Grid>
+      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/instructors")}>
+          <CardAnalytics title={instructorCount} subTitle={"Faculty"} image_src={Instructor} />
+      </Grid>
+      <Grid item xs={2} sm={4} md={4}>
+          <CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} />
+      </Grid>
+      <Grid item xs={2} sm={4} md={4}>
+          <CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} />
+      </Grid>
+      <Grid item xs={2} sm={4} md={4}>
+          <CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} />
+      </Grid>
+      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/sessions")}>
+          <CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} />
+      </Grid>
+       
+      </Grid>
     </SideBar>
   )
 }
