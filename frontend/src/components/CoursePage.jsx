@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { CssBaseline } from '@mui/material';
-import ResponsiveAppBar from './ResponsiveAppBar';
 import ErrorMessage from './ErrorMessage';
+import SideBar from './SideBar';
 import adminServices from '../services/admin';
 import CardAnalytics from './CardAnalytics';
 import Grid from '@mui/material/Grid';
@@ -28,12 +27,9 @@ const CoursePage = () => {
   }, [])
 
   return (
-    <div>
-      <CssBaseline />
-      <ResponsiveAppBar />
+      <SideBar>
       <ErrorMessage errorMessage={errorMessage} />
-      <div className="container-course">
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} className="grid-container">
               {courses.map(course => (
               <Grid item xs={2} sm={4} md={4} key={course.id}>
                 <CardAnalytics title = {course.code} 
@@ -42,8 +38,7 @@ const CoursePage = () => {
                 </Grid>
                 ))}
         </Grid>
-      </div>
-    </div>
+      </SideBar>
   )
 };
 

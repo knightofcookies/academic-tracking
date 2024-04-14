@@ -83,7 +83,7 @@ export default function Analytics() {
       <Grid item xs={2} sm={4} md={4}>
           <CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} />
       </Grid>
-      <Grid item xs={2} sm={4} md={4}>
+      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/courses")}>
           <CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} />
       </Grid>
       <Grid item xs={2} sm={4} md={4}>
