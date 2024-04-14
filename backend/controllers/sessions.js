@@ -13,7 +13,7 @@ sessionsRouter.get("/count", async (request, response) => {
     return response.json(sessionCount[0].count);
 });
 
-sessionsRouter.get("/:session_id", async (req, res) => {
+sessionsRouter.get("/:session_id", async (request, response) => {
     let { session_id } = request.params;
 
     if (!session_id instanceof Number || session_id % 1 != 0) {
@@ -37,7 +37,7 @@ sessionsRouter.get("/:session_id", async (req, res) => {
     return response.json(session);
 });
 
-sessionsRouter.get("/:session_id/courses", async (req, res) => {
+sessionsRouter.get("/:session_id/courses", async (request, response) => {
     let { session_id } = request.params;
 
     if (!session_id instanceof Number || session_id % 1 != 0) {
@@ -58,7 +58,6 @@ sessionsRouter.get("/:session_id/courses", async (req, res) => {
     }
 
     const coursesQuery = `SELECT course_id, course.title, course.code, 
-        course.dept_name course_dept_name,
         instructor_id, name, designation,
         instructor.department_id instructor_dept_id
         FROM teaches 

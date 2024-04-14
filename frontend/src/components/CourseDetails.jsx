@@ -9,7 +9,6 @@ import SideBar from './SideBar';
 
 export default function CourseDetails() {
   const { id } = useParams();
-  const [instructor, setInstructor] = useState([]);
   const [course, setCourse] = useState([]);
   const [department, setDepartment] = useState([]);
   const [details, setDetails] = useState([]);

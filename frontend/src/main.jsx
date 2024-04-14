@@ -27,6 +27,8 @@ import Analytics from './components/Analytics.jsx';
 import InstructorPage from './components/InstructorPage.jsx';
 import InstructorDetails from './components/InstructorDetails.jsx';
 import CourseDetails from './components/CourseDetails.jsx';
+import SessionPage from './components/SessionPage.jsx';
+import SessionDetails from './components/SessionDetails.jsx';
 
 
 const router = createBrowserRouter([
@@ -150,7 +152,18 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: adminUserLoader
   },
-
+  {
+    path: "analytics/sessions",
+    element: <SessionPage />,
+    errorElement: <ErrorPage />,
+    loader: adminUserLoader
+  },
+  {
+    path: "analytics/session/:id",
+    element: <SessionDetails />,
+    errorElement: <ErrorPage />,
+    loader: adminUserLoader
+  }
 ])
 
 

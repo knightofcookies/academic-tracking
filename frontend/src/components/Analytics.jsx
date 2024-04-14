@@ -65,7 +65,7 @@ export default function Analytics() {
         <div><CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} /></div>
         <div><CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} /></div>
         <div><CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} /></div>
-        <div><CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} /></div>
+        <div onClick={() => navigate("/analytics/sessions")}><CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} /></div>
       </div>
     </SideBar>
   )

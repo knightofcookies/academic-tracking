@@ -161,6 +161,14 @@ const getDepartment = async (id) => {
     return axiosGET(`departments/${id}`);
 }
 
+const getSessionDetails = async (id) => {
+    return axiosGET (`sessions/${id}/courses`);
+}
+
+const getSession = async (id) => {
+    return axiosGET(`sessions/${id}`);
+}
+
 export default {
     setToken,
     createAdmin,
@@ -191,5 +199,7 @@ export default {
     getCourseInstructor,
     getDetailsOfCourse,
     getCourse,
-    getDepartment
+    getDepartment,
+    getSessionDetails,
+    getSession
 };
