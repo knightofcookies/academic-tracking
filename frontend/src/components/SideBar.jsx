@@ -79,7 +79,7 @@ export default function SideBar(props) {
         {
             name: 'Add Student Data',
             icon: <GradingIcon />,
-            link: '/admin/dashboard'
+            link: '/admin/takes'
         },
     ];
 

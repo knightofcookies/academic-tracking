@@ -26,6 +26,7 @@ import AddTakesPage from './components/AddTakesPage.jsx';
 import Analytics from './components/Analytics.jsx';
 import InstructorPage from './components/InstructorPage.jsx';
 import InstructorDetails from './components/InstructorDetails.jsx';
+import CourseDetails from './components/CourseDetails.jsx';
 
 
 const router = createBrowserRouter([
@@ -138,11 +139,17 @@ const router = createBrowserRouter([
     loader: adminUserLoader
   },
   {
-    path: "analytics/instructors/instructor_page",
+    path: "analytics/instructors/instructor_page/:id",
     element: <InstructorDetails />,
     errorElement: <ErrorPage />,
     loader: adminUserLoader
-  }
+  },
+  {
+    path: "analytics/course/:id",
+    element: <CourseDetails />,
+    errorElement: <ErrorPage />,
+    loader: adminUserLoader
+  },
 
 ])
 

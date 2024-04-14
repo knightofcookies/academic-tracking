@@ -17,6 +17,31 @@ departmentsRouter.get("/count", async (request, response) => {
     return response.json(departmentCount[0].count);
 });
 
+departmentsRouter.get("/:id", async (request, response) => {
+    const { id } = request.params;
+
+    if (!id instanceof Number || id % 1 !== 0) {
+        return response.status(400).json({
+            error: "parameter 'id' must be a number.",
+        });
+    }
+
+    const departmentWithId = await dbConn.query(
+        "SELECT * FROM department WHERE id=?",
+        [id]
+    );
+    if (departmentWithId.length === 0) {
+        return response.status(404).json({
+            error: "A department with that id does not exist",
+        });
+    }
+
+    const [department] = departmentWithId;
+
+    return response.json(department);
+
+})
+
 departmentsRouter.get("/courses/count", async(request, response) => {
     const countQuery = `SELECT department.name, department.id as department_id, COUNT(course.code) as count 
                         FROM department 

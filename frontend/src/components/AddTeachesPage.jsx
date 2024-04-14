@@ -121,9 +121,7 @@ const AddTeachesPage = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            height: "100vh",
-                            backgroundImage:
-                                "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)",
+                            height: "85vh",
                         }}
                     >
                         <Paper style={{ padding: 24, borderRadius: 8 }}>
