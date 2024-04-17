@@ -35,7 +35,7 @@ export default function InstructorPage() {
         }, 5000);
       });
 
-  }, [user]);
+  }, [user?.token]);
 
   const handleClick = (id) => {
     console.log(id);
