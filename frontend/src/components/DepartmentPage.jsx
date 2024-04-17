@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ResponsiveAppBar from "./ResponsiveAppBar";
+import { useEffect, useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import CardAnalytics from "./CardAnalytics";
 import Grid from "@mui/material/Grid";
@@ -11,17 +10,20 @@ import SideBar from "./SideBar";
 export default function DepartmentPage() {
     const [departments, setDepartments] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
+
     const user = JSON.parse(
         localStorage.getItem("loggedAcademicTrackingAdmin") ||
-            localStorage.getItem("loggedAcademicTrackingUser")
+        localStorage.getItem("loggedAcademicTrackingUser")
     );
+
     useEffect(() => {
         services.setToken(user.token);
         services
             .getAllDepartments()
             .then((data) => setDepartments(data))
             .catch((error) => setErrorMessage(error));
-    }, []);
+    }, [user?.token]);
+
     return (
         <SideBar>
             <ErrorMessage errorMessage={errorMessage} />
@@ -33,7 +35,6 @@ export default function DepartmentPage() {
             >
                 {departments.map((department) => (
                     <Grid item xs={2} sm={4} md={4} key={department.id}>
-                        {/* <Item><CardAnalytics title={department.name}/></Item> */}
                         <CardAnalytics
                             title={department.name}
                             image_src={Department}

@@ -9,7 +9,6 @@ import Book from '../assets/book_icon.png'
 import Session from '../assets/session_image.png'
 import Programme from '../assets/programme_image.png'
 import { useNavigate } from 'react-router-dom'
-import '../styles/Analytics.css'
 import SideBar from './SideBar'
 
 export default function Analytics() {
@@ -56,43 +55,34 @@ export default function Analytics() {
       .catch((error) => {
         console.error('Error fetching Session Count', error);
       })
-  }, [user])
+  }, [user?.token]);
 
   return (
     <SideBar>
-      {/* <div className='container'>
-        <div><CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} /></div>
-        <div onClick={() => navigate("/analytics/instructors")}><CardAnalytics title={instructorCount} subTitle={"Faculty"} image_src={Instructor} /></div>
-        <div><CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} /></div>
-        <div><CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} /></div>
-        <div><CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} /></div>
-        <div onClick={() => navigate("/analytics/sessions")}><CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} /></div>
-      </div> */}
       <Grid
-                container
-                spacing={{ xs: 2, md: 3 }}
-                columns={{ xs: 4, sm: 8, md: 12 }}
-                className="grid-container container"
-            >
-      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/departments")}>
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/departments")}>
           <CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} />
-      </Grid>
-      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/instructors")}>
+        </Grid>
+        <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/instructors")}>
           <CardAnalytics title={instructorCount} subTitle={"Faculty"} image_src={Instructor} />
-      </Grid>
-      <Grid item xs={2} sm={4} md={4}>
+        </Grid>
+        <Grid item xs={2} sm={4} md={4}>
           <CardAnalytics title={studentCount} subTitle={"Student"} image_src={Student} />
-      </Grid>
-      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/courses")}>
+        </Grid>
+        <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/courses")}>
           <CardAnalytics title={courseCount} subTitle={"Courses Offered"} image_src={Book} />
-      </Grid>
-      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/programmes")}>
+        </Grid>
+        <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/programmes")}>
           <CardAnalytics title={programmeCount} subTitle={"Programmes Offered"} image_src={Programme} />
-      </Grid>
-      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/sessions")}>
+        </Grid>
+        <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/sessions")}>
           <CardAnalytics title={sessionCount} subTitle={"Session Offered"} image_src={Session} />
-      </Grid>
-       
+        </Grid>
+
       </Grid>
     </SideBar>
   )

@@ -131,7 +131,7 @@ export default function SideBar(props) {
                         </List>
                     </Box>
                 </Drawer>
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                <Box component="main" sx={{ flexGrow: 1 }}>
                     <Toolbar />
                     {props.children}
                 </Box>
