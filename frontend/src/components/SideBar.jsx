@@ -22,8 +22,28 @@ import ResponsiveAppBar from "./ResponsiveAppBar";
 
 const drawerWidth = 240;
 
+const getAdminFromLocalStorage = () => {
+    const loggedContributorJSON = window.localStorage.getItem("loggedAcademicTrackingAdmin");
+    if (loggedContributorJSON) {
+        return JSON.parse(loggedContributorJSON);
+    }
+    return null;
+};
+
 export default function SideBar(props) {
     const navigate = useNavigate();
+
+    if (!getAdminFromLocalStorage()) {
+        return (<CustomThemeProvider>
+            <Box sx={{ display: 'flex' }}>
+                <ResponsiveAppBar />
+                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <Toolbar />
+                    {props.children}
+                </Box>
+            </Box>
+        </CustomThemeProvider>)
+    }
 
     const items1 = [
         {
