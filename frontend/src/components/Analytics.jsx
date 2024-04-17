@@ -74,7 +74,7 @@ export default function Analytics() {
                 columns={{ xs: 4, sm: 8, md: 12 }}
                 className="grid-container container"
             >
-      <Grid item xs={2} sm={4} md={4}>
+      <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/departments")}>
           <CardAnalytics title={departmentCount} subTitle={"Department"} image_src={Department} />
       </Grid>
       <Grid item xs={2} sm={4} md={4} onClick={() => navigate("/analytics/instructors")}>
